@@ -1,0 +1,1278 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>EPT Digital — Transformação Digital da Escola Pública de Trânsito</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,600;0,700;0,800;1,300&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/5.1.0/reveal.min.css">
+<style>
+/* ── TOKENS ── */
+:root {
+  --az-esc: #004077;
+  --az-med: #005CA8;
+  --az-mc:  #3490CE;
+  --az-cl:  #A4CFED;
+  --cz-esc: #4A4A49;
+  --cz-med: #7F7F7F;
+  --cz-cl:  #BFBFBF;
+  --branco: #ffffff;
+  --gelo:   #F0F6FC;
+  --danger: #C0392B;
+  --ok:     #1E7C45;
+}
+
+/* ── BASE ── */
+.reveal { font-family:'Open Sans',sans-serif; font-size:18px; color:#1a2332; }
+.reveal .slides section { text-align:left; padding:0; height:700px; }
+.reveal h1,.reveal h2,.reveal h3 { font-family:'Open Sans',sans-serif; margin:0; }
+.reveal .progress span { background:var(--az-mc); }
+.reveal .controls { color:var(--az-med); bottom:16px; right:16px; }
+.reveal .slide-number { font-family:'Open Sans',sans-serif; font-size:11px; color:var(--cz-med); bottom:14px; left:20px; }
+
+/* ── LAYOUT HELPERS ── */
+.full { position:absolute; inset:0; display:flex; flex-direction:column; }
+.pad { padding:48px 56px; }
+.pad-sm { padding:32px 48px; }
+
+/* ══════════════════════════
+   SLIDE 0 — CAPA
+══════════════════════════ */
+.capa {
+  background: linear-gradient(160deg, #001f3f 0%, #003670 45%, #005CA8 100%);
+  overflow:hidden;
+}
+.capa-noise {
+  position:absolute; inset:0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+  opacity:.6;
+}
+.capa-grid {
+  position:absolute; inset:0;
+  background-image: linear-gradient(rgba(255,255,255,.03) 1px, transparent 1px),
+                    linear-gradient(90deg, rgba(255,255,255,.03) 1px, transparent 1px);
+  background-size: 48px 48px;
+}
+.capa-circle {
+  position:absolute; border-radius:50%;
+  border:1px solid rgba(255,255,255,.07);
+}
+.capa-content {
+  position:relative; z-index:2;
+  display:flex; flex-direction:column; justify-content:flex-end;
+  height:100%; padding:52px 60px;
+}
+.capa-eyebrow {
+  font-size:12px; letter-spacing:3.5px; text-transform:uppercase;
+  color:var(--az-cl); opacity:.85; margin-bottom:20px;
+  display:flex; align-items:center; gap:10px;
+}
+.capa-eyebrow::before {
+  content:''; display:block; width:24px; height:1px; background:var(--az-cl);
+}
+.capa-title {
+  font-family:'Open Sans',sans-serif;
+  font-size:86px; line-height:.9; color:#fff;
+  margin-bottom:22px; letter-spacing:-2px;
+}
+.capa-title em { color:var(--az-cl); font-style:normal; }
+.capa-desc {
+  font-size:16px; font-weight:300; color:rgba(255,255,255,.6);
+  max-width:480px; line-height:1.7; margin-bottom:44px;
+}
+.capa-pills {
+  display:flex; gap:12px; flex-wrap:wrap; padding-top:28px;
+  border-top:1px solid rgba(255,255,255,.1);
+}
+.capa-pill {
+  background:rgba(255,255,255,.06); border:1px solid rgba(255,255,255,.12);
+  border-radius:4px; padding:7px 16px;
+  font-size:13px; color:rgba(255,255,255,.75); font-weight:500;
+  display:flex; align-items:center; gap:7px;
+}
+.capa-pill-num {
+  font-size:16px; font-weight:600; color:#fff;
+  font-family:'Open Sans',sans-serif;
+}
+
+/* ══════════════════════════
+   SLIDE PADRÃO — LIGHT
+══════════════════════════ */
+.slide-light { background:var(--gelo); }
+.slide-white { background:#fff; }
+
+.slide-header {
+  display:flex; align-items:flex-start; gap:0;
+  border-bottom:1px solid #dde8f0;
+  padding:28px 56px 18px;
+  background:#fff;
+}
+.slide-header-left {
+  flex:1;
+}
+.slide-label {
+  font-size:11px; letter-spacing:3px; text-transform:uppercase;
+  color:var(--az-mc); font-weight:600; margin-bottom:8px;
+  display:flex; align-items:center; gap:8px;
+}
+.slide-label::before {
+  content:''; display:block; width:16px; height:2px;
+  background:var(--az-mc); border-radius:1px;
+}
+.slide-title {
+  font-family:'Open Sans',sans-serif;
+  font-size:34px; color:var(--az-esc); line-height:1.1;
+  margin-bottom:6px;
+}
+.slide-sub {
+  font-size:14px; color:var(--cz-med); font-weight:300;
+  line-height:1.55;
+}
+.slide-badge {
+  display:inline-flex; align-items:center; gap:5px;
+  padding:5px 13px; border-radius:2px; font-size:11px;
+  font-weight:700; letter-spacing:2px; text-transform:uppercase;
+  margin-bottom:10px;
+}
+.badge-proj { background:var(--az-esc); color:#fff; }
+.badge-jorn { background:var(--az-med); color:#fff; }
+.badge-curso { background:#1a6b3c; color:#fff; }
+
+.slide-body { flex:1; overflow-y:auto; padding:24px 56px 16px; }
+
+/* ══════════════════════════
+   PERÍODO TAG
+══════════════════════════ */
+.periodo {
+  display:inline-flex; align-items:center; gap:6px;
+  background:#EBF4FB; border:1px solid var(--az-cl);
+  border-radius:20px; padding:4px 14px; margin-bottom:18px;
+  font-size:13px; font-weight:600; color:var(--az-med);
+}
+.periodo svg { width:12px; height:12px; }
+
+/* ══════════════════════════
+   TABELA EDITÁVEL
+══════════════════════════ */
+.tbl-wrap {
+  border-radius:8px; overflow:hidden;
+  box-shadow:0 1px 16px rgba(0,64,119,.08), 0 0 0 1px rgba(0,64,119,.06);
+}
+table.ept {
+  width:100%; border-collapse:collapse;
+  font-size:13px; background:#fff;
+}
+table.ept thead tr { background:var(--az-esc); }
+table.ept thead th {
+  padding:10px 14px; text-align:left; color:#fff;
+  font-family:'Open Sans',sans-serif; font-size:9.5px;
+  font-weight:600; letter-spacing:1.5px; text-transform:uppercase;
+  white-space:nowrap;
+}
+table.ept tbody tr { border-bottom:1px solid #e8eef5; transition:background .15s; }
+table.ept tbody tr:hover { background:#f5f9fd; }
+table.ept tbody tr.parent { background:#EBF4FB; }
+table.ept tbody tr.parent td { color:var(--az-esc); font-weight:600; font-size:14px; }
+table.ept td {
+  padding:10px 14px; vertical-align:top;
+  color:#2d3748; line-height:1.5;
+}
+table.ept td[contenteditable] { cursor:text; outline:none; position:relative; }
+table.ept td[contenteditable]:focus {
+  background:#EBF4FB;
+  box-shadow:inset 0 0 0 2px var(--az-mc);
+  border-radius:3px;
+}
+.etapa { color:var(--az-mc); font-weight:700; font-size:14px; white-space:nowrap; }
+.tag {
+  display:inline-block; background:var(--az-cl); color:var(--az-esc);
+  font-size:11px; font-weight:700; padding:3px 8px;
+  border-radius:2px; margin:1px; white-space:nowrap;
+}
+.risk { color:#b03020; font-size:13px; }
+.risk::before { content:'▲ '; font-size:10px; }
+.mit { color:#1a7a45; font-size:13px; }
+
+/* ══════════════════════════
+   SLIDE MAPA (visão geral projetos)
+══════════════════════════ */
+.mapa-grid {
+  display:grid; grid-template-columns:repeat(4,1fr); gap:12px;
+  flex:1; align-content:start;
+}
+.mapa-card {
+  border-radius:6px; overflow:hidden;
+  box-shadow:0 1px 10px rgba(0,64,119,.1);
+  background:#fff; border:1px solid #dde8f2;
+  transition:transform .2s, box-shadow .2s;
+}
+.mapa-card:hover { transform:translateY(-2px); box-shadow:0 4px 18px rgba(0,64,119,.14); }
+.mapa-card { cursor:pointer; }
+.mapa-card .mc-head::after { content:'→'; margin-left:auto; opacity:.5; font-size:13px; }
+.mc-head {
+  background:var(--az-esc); color:#fff; padding:10px 14px;
+  font-size:14px; font-weight:600; display:flex; gap:8px; align-items:center;
+}
+.mc-n {
+  background:rgba(255,255,255,.18); border-radius:3px;
+  padding:1px 6px; font-size:10px; flex-shrink:0;
+}
+.mc-body { padding:10px 14px; overflow-y:auto; max-height:160px; }
+.mc-per { font-size:12px; color:var(--az-med); font-weight:600; margin-bottom:6px; }
+.mc-list { list-style:none; padding:0; margin:0; }
+.mc-list li {
+  font-size:12.5px; padding:4px 0; border-bottom:1px solid #f0f4f8;
+  display:flex; gap:5px; line-height:1.3; color:var(--cz-esc);
+}
+.mc-list li::before { content:'→'; color:var(--az-mc); flex-shrink:0; font-size:9px; margin-top:2px; }
+.mc-list li:last-child { border-bottom:none; }
+
+/* ══════════════════════════
+   SLIDE CONTEXTO
+══════════════════════════ */
+.ctx-grid { display:grid; grid-template-columns:1fr 1fr; gap:14px; }
+.ctx-box { border-radius:6px; padding:14px 20px; border-left:3px solid; }
+.ctx-danger { background:#fdf3f2; border-color:var(--danger); }
+.ctx-ok { background:#f0faf5; border-color:var(--ok); }
+.ctx-title {
+  font-size:11px; letter-spacing:2px; text-transform:uppercase;
+  font-weight:700; margin-bottom:10px;
+}
+.ctx-danger .ctx-title { color:var(--danger); }
+.ctx-ok .ctx-title { color:var(--ok); }
+.ctx-list { list-style:none; padding:0; margin:0; display:flex; flex-direction:column; gap:8px; }
+.ctx-list li { display:flex; gap:10px; font-size:14px; color:#3a3a3a; line-height:1.45; }
+.ctx-list li .ico { flex-shrink:0; font-size:14px; }
+
+.atores { margin-top:14px; }
+.atores-label {
+  font-size:11px; letter-spacing:2px; text-transform:uppercase;
+  color:var(--cz-med); font-weight:600; margin-bottom:10px;
+}
+.atores-tags { display:flex; flex-wrap:wrap; gap:6px; }
+.ator {
+  background:#EBF4FB; color:var(--az-esc);
+  padding:4px 12px; border-radius:3px;
+  font-size:13px; font-weight:500;
+}
+
+/* ══════════════════════════
+   JORNADA CARDS (visão geral)
+══════════════════════════ */
+.j-grid { display:grid; grid-template-columns:1fr 1fr; gap:14px; flex:1; overflow-y:auto; }
+.j-card { background:#fff; border-radius:8px; overflow:hidden; box-shadow:0 1px 12px rgba(0,64,119,.08); }
+.j-head {
+  padding:14px 18px;
+  background:linear-gradient(95deg, var(--az-med) 0%, var(--az-mc) 100%);
+  color:#fff;
+}
+.j-head-label { font-size:11px; letter-spacing:2px; text-transform:uppercase; opacity:.75; margin-bottom:4px; }
+.j-head-title { font-size:17px; font-weight:600; margin-bottom:4px; }
+.j-head-desc { font-size:12.5px; opacity:.75; font-weight:300; line-height:1.4; }
+.j-steps { display:flex; align-items:flex-start; flex-wrap:wrap; gap:6px; padding:14px 16px; }
+.j-step { display:flex; flex-direction:column; align-items:center; gap:4px; }
+.j-ico {
+  width:30px; height:30px; border-radius:50%;
+  background:var(--az-esc); color:#fff;
+  display:flex; align-items:center; justify-content:center;
+  font-size:11px; font-weight:700;
+}
+.j-lbl { font-size:11px; text-align:center; color:var(--cz-esc); max-width:64px; line-height:1.2; }
+.j-arr { color:var(--az-cl); font-size:14px; margin-top:7px; flex-shrink:0; }
+
+/* ══════════════════════════
+   SLIDE FINAL
+══════════════════════════ */
+.fim {
+  background:var(--az-esc); display:flex; flex-direction:column;
+  align-items:center; justify-content:center; text-align:center; padding:60px;
+}
+.fim h2 {
+  font-family:'Open Sans',sans-serif; font-size:64px;
+  color:#fff; line-height:.9; margin-bottom:20px;
+}
+.fim h2 em { color:var(--az-cl); font-style:normal; }
+.fim p { font-size:16px; color:rgba(255,255,255,.5); font-weight:300; line-height:1.7; }
+.fim-links { margin-top:36px; display:flex; gap:20px; flex-wrap:wrap; justify-content:center; }
+.fim-link {
+  color:var(--az-cl); font-size:14px; text-decoration:none;
+  border:1px solid rgba(164,207,237,.25); border-radius:4px;
+  padding:8px 18px; transition:background .2s;
+}
+.fim-link:hover { background:rgba(164,207,237,.1); }
+
+/* ══════════════════════════
+   EDIT HINT
+══════════════════════════ */
+.edit-hint {
+  font-size:12px; color:var(--cz-med); margin-top:8px;
+  display:flex; align-items:center; gap:5px;
+}
+.edit-hint::before { content:'✏'; }
+
+/* SCROLLBAR */
+.slide-body::-webkit-scrollbar,.tbl-wrap::-webkit-scrollbar { width:4px; }
+.slide-body::-webkit-scrollbar-track,.tbl-wrap::-webkit-scrollbar-track { background:#f0f4f8; }
+.slide-body::-webkit-scrollbar-thumb,.tbl-wrap::-webkit-scrollbar-thumb { background:var(--az-cl); border-radius:2px; }
+
+/* REVEAL RESETS */
+.reveal .slides { width:100%; }
+
+/* ══════════════════════════════════════════
+   RESPONSIVO — TABLET (≤1024px)
+   Cobre iPad Pro 12.9", iPad Air, iPad Mini,
+   tablets Android de 8"–11"
+══════════════════════════════════════════ */
+@media (max-width: 1024px) {
+
+  /* Base */
+  .reveal { font-size:15px; }
+
+  /* Capa */
+  .capa-content { padding:36px 40px; }
+  .capa-title { font-size:62px; }
+  .capa-desc { font-size:14px; max-width:100%; }
+  .capa-eyebrow { font-size:10px; }
+  .capa-pill { font-size:11px; }
+
+  /* Header dos slides */
+  .slide-header { padding:20px 32px 14px; }
+  .slide-title { font-size:26px; }
+  .slide-sub { font-size:12px; max-width:100%; }
+  .slide-badge { font-size:9px; padding:4px 10px; }
+  .slide-label { font-size:9px; }
+  .slide-body { padding:16px 32px 12px; }
+
+  /* Período pill */
+  .periodo { font-size:11px; margin-bottom:12px; }
+
+  /* Tabelas — scroll horizontal em telas menores */
+  .tbl-wrap { overflow-x:auto; -webkit-overflow-scrolling:touch; }
+  table.ept { font-size:11px; min-width:700px; }
+  table.ept thead th { font-size:9px; padding:8px 10px; }
+  table.ept td { padding:7px 10px; font-size:11px; }
+  table.ept tbody tr.parent td { font-size:12px; }
+  .etapa { font-size:12px; }
+  .tag { font-size:9px; padding:2px 5px; }
+  .risk { font-size:11px; }
+  .mit { font-size:11px; }
+
+  /* Mapa de projetos — 2 colunas em tablet */
+  .mapa-grid { grid-template-columns: repeat(2,1fr); gap:10px; }
+  .mc-head { font-size:12px; padding:9px 12px; }
+  .mc-list li { font-size:11px; }
+
+  /* Contexto estratégico */
+  .ctx-grid { gap:14px; }
+  .ctx-list li { font-size:12px; }
+  .ctx-box { padding:16px 18px; }
+  .ator { font-size:11px; padding:3px 10px; }
+
+  /* Jornadas — mantém 2 colunas mas compacta */
+  .j-grid { gap:10px; }
+  .j-head { padding:11px 14px; }
+  .j-head-title { font-size:14px; }
+  .j-head-desc { font-size:11px; }
+  .j-head-label { font-size:9px; }
+  .j-ico { width:26px; height:26px; font-size:10px; }
+  .j-lbl { font-size:9px; max-width:52px; }
+  .j-steps { padding:10px 12px; gap:4px; }
+
+  /* Encerramento */
+  .fim h2 { font-size:48px; }
+  .fim p { font-size:14px; }
+  .fim-link { font-size:12px; padding:6px 14px; }
+
+  /* Edit hint */
+  .edit-hint { font-size:10px; }
+
+  /* Status Firebase */
+  #fb-status { font-size:10px; padding:3px 10px; }
+}
+
+/* ══════════════════════════════════════════
+   TABLET RETRATO (≤768px)
+   iPad Mini retrato, tablets 8"
+══════════════════════════════════════════ */
+@media (max-width: 768px) {
+
+  .capa-title { font-size:48px; }
+  .capa-content { padding:28px 28px; }
+  .slide-header { padding:16px 24px 12px; }
+  .slide-title { font-size:22px; }
+  .slide-body { padding:12px 24px 10px; }
+
+  /* Mapa — 2 colunas compactas */
+  .mapa-grid { grid-template-columns: repeat(2,1fr); gap:8px; }
+  .mc-head { font-size:11px; }
+  .mc-list li { font-size:10.5px; }
+
+  /* Tabelas — scroll horizontal */
+  table.ept { min-width:600px; font-size:10.5px; }
+  table.ept thead th { font-size:8.5px; padding:7px 8px; }
+  table.ept td { padding:6px 8px; }
+
+  /* Jornadas — empilha em 1 coluna */
+  .j-grid { grid-template-columns: 1fr; }
+
+  /* Contexto — empilha em 1 coluna */
+  .ctx-grid { grid-template-columns: 1fr; gap:10px; }
+}
+</style>
+</head>
+<body>
+<div class="reveal">
+<div class="slides">
+
+<!-- ══════════ CAPA ══════════ -->
+<section>
+<div class="full capa">
+  <div class="capa-noise"></div>
+  <div class="capa-grid"></div>
+  <div class="capa-circle" style="width:520px;height:520px;top:-120px;right:-100px;"></div>
+  <div class="capa-circle" style="width:300px;height:300px;top:60px;right:120px;"></div>
+  <div class="capa-circle" style="width:160px;height:160px;top:200px;right:280px;opacity:.5"></div>
+  <div class="capa-content">
+    <div class="capa-eyebrow">DETRAN-SP · Diretoria de Segurança Viária · 2026</div>
+    <h1 class="capa-title">EPT<br><em>Digital</em></h1>
+    <p class="capa-desc">Transformação digital da Escola Pública de Trânsito — integrando processos, ampliando a capacidade de gestão e expandindo a oferta educacional do DETRAN-SP.</p>
+    <div class="capa-pills">
+      <div class="capa-pill"><span class="capa-pill-num">8</span> Projetos Pontuais</div>
+      <div class="capa-pill"><span class="capa-pill-num">4</span> Jornadas de Aprendizagem</div>
+      
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- ══════════ CONTEXTO ══════════ -->
+<section>
+<div class="full slide-white">
+  <div class="slide-header">
+    <div class="slide-header-left">
+      <div class="slide-label">Contexto Estratégico</div>
+      <h2 class="slide-title">Por que a EPT Digital?</h2>
+      <p class="slide-sub">Diagnóstico da situação atual e modelo proposto para a transformação digital da Escola Pública de Trânsito</p>
+    </div>
+  </div>
+  <div class="slide-body" style="display:flex;flex-direction:column;gap:16px;">
+    <div class="ctx-grid">
+      <div class="ctx-box ctx-danger">
+        <div class="ctx-title">Situação Atual — Desafios</div>
+        <ul class="ctx-list">
+          <li><span class="ico">✕</span><span>Processos e informações dispersos entre áreas</span></li>
+          <li><span class="ico">✕</span><span>Baixa integração entre planejamento, execução e monitoramento</span></li>
+          <li><span class="ico">✕</span><span>Capacidade limitada de escala e geração de inteligência de dados</span></li>
+        </ul>
+      </div>
+      <div class="ctx-box ctx-ok">
+        <div class="ctx-title">Modelo Proposto — Resultados</div>
+        <ul class="ctx-list">
+          <li><span class="ico">✓</span><span>EPT como plataforma integrada e rastreável</span></li>
+          <li><span class="ico">✓</span><span>Processos mais conectados e decisão orientada por dados</span></li>
+          <li><span class="ico">✓</span><span>Maior capacidade de execução, impacto e escala educacional</span></li>
+        </ul>
+      </div>
+    </div>
+    <div class="atores">
+      <div class="atores-label">Atores Envolvidos</div>
+      <div class="atores-tags">
+        <span class="ator">DSV — Diretoria de Segurança Viária</span>
+        <span class="ator">DAC — Atendimento ao Cidadão</span>
+        <span class="ator">DHC — Habilitação e Condutores</span>
+        <span class="ator">DTI — Tecnologia da Informação</span>
+        <span class="ator">DFT — Fiscalização de Trânsito</span>
+        <span class="ator">AEPE — Produtos Estratégicos</span>
+        <span class="ator">ASCOM — Comunicação Institucional</span>
+        <span class="ator">PRODESP</span>
+      </div>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- ══════════ MAPA PROJETOS ══════════ -->
+<section>
+<div class="full slide-light">
+  <div class="slide-header" style="background:var(--gelo);">
+    <div class="slide-header-left">
+      <div class="slide-label">Visão Geral</div>
+      <h2 class="slide-title">Mapa de Projetos Pontuais</h2>
+      <p class="slide-sub">8 iniciativas estruturantes para a transformação digital da EPT em 2026</p>
+    </div>
+  </div>
+  <div class="slide-body">
+    <div class="mapa-grid">
+      <div class="mapa-card" data-slide="proj-1"><div class="mc-head"><span class="mc-n">1</span>Marca e Identidade Visual</div><div class="mc-body"><ul class="mc-list"><li>Definição da marca</li><li>Validação c/ Presidência</li><li>Aprovação SECOM</li><li>Aplicação nos ambientes</li></ul></div></div>
+      <div class="mapa-card" data-slide="proj-2"><div class="mc-head"><span class="mc-n">2</span>Portal do Cidadão</div><div class="mc-body"><ul class="mc-list"><li>Modelagem da página</li><li>Revisão da modelagem final</li><li>Protótipo (Figma)</li><li>Desenvolvimento da página</li><li>Testes e homologação</li><li>Publicação da página</li></ul></div></div>
+      <div class="mapa-card" data-slide="proj-3"><div class="mc-head"><span class="mc-n">3</span>Atualização Moodle</div><div class="mc-body"><ul class="mc-list"><li>Atualização v3 → v5</li><li>Remodelagem visual e homologação</li><li>Revisão da AEPE</li><li>Avaliação da identidade visual</li><li>Ajustes pré-Presidência</li><li>Apresentação à Presidência</li><li>Ajustes finais</li><li>Definição de login do usuário</li><li>Publicação da plataforma</li></ul></div></div>
+      <div class="mapa-card" data-slide="proj-4"><div class="mc-head"><span class="mc-n">4</span>Power App Seg. Viária</div><div class="mc-body"><ul class="mc-list"><li>Webinário institucional</li><li>Testes operacionais</li><li>Alimentação do legado</li><li>Lançamento oficial</li><li>Integração c/ bases (BR)</li><li>Dashboard Educação</li><li>Relatório final</li></ul></div></div>
+      <div class="mapa-card" data-slide="proj-5"><div class="mc-head"><span class="mc-n">5</span>Migração Multicloud</div><div class="mc-body"><ul class="mc-list"><li>Definição de empresa</li><li>Contratação</li><li>Suporte e manutenção</li><li>Volume de usuários/dia</li></ul></div></div>
+      <div class="mapa-card" data-slide="proj-6"><div class="mc-head"><span class="mc-n">6</span>Contratação Conteúdo</div><div class="mc-body"><ul class="mc-list"><li>Empresa para criação de conteúdo</li><li>Análise de propostas</li><li>Documentos preparatórios</li><li>Parecer técnico/jurídico</li><li>Encaminhamento para contratação</li><li>Início do contrato</li></ul></div></div>
+      <div class="mapa-card" data-slide="proj-7"><div class="mc-head"><span class="mc-n">7</span>Aquisição de Softwares</div><div class="mc-body"><ul class="mc-list"><li>Documentos preparatórios (ETP, TR, DFD)</li><li>Instrução de processo SEI</li><li>Tramitação do processo SEI</li><li>Homologação</li></ul></div></div>
+      <div class="mapa-card" data-slide="proj-8"><div class="mc-head"><span class="mc-n">8</span>Montagem de Estúdio</div><div class="mc-body"><ul class="mc-list"><li>Entrega do espaço reformado</li><li>Especificação dos equipamentos</li><li>Alinhamento com DTI</li><li>Aquisição dos materiais</li><li>Entrega oficial</li></ul></div></div>
+    </div>
+  </div>
+</div>
+</section>
+
+
+<!-- ══════════ PROJETO 1 ══════════ -->
+<section id="proj-1">
+<div class="full slide-light">
+  <div class="slide-header" style="background:var(--gelo);">
+    <div class="slide-header-left">
+      <div class="slide-badge badge-proj">Projeto Pontual · 1</div>
+      <h2 class="slide-title">Marca e Identidade Visual da EPT Digital</h2>
+      <p class="slide-sub">Desenvolvimento da identidade institucional da EPT Digital, contemplando conceito de marca, identidade visual e diretrizes de aplicação, alinhadas ao manual de identidade visual do DETRAN-SP e à política pública de educação e segurança viária. A ação visa garantir reconhecimento institucional, padronização da comunicação e fortalecimento do posicionamento da EPT como plataforma de educação digital.</p>
+    </div>
+  </div>
+  <div class="slide-body">
+    <div class="tbl-wrap">
+    <table class="ept"><thead><tr><th style="width:50px">#</th><th style="width:190px">Etapa</th><th>Descrição</th><th style="width:110px">Período</th><th style="width:110px">Responsável</th><th style="width:160px">Risco</th><th style="width:165px">Mitigação</th><th style="width:150px">Solução</th></tr></thead><tbody>
+    <tr><td class="etapa">1.1</td><td contenteditable>Definição de criação da marca</td><td contenteditable>Desenvolvimento do conceito da marca EPT Digital — nome institucional, logotipo, tipografia, paleta de cores e diretrizes de aplicação.</td><td contenteditable>28 jan → 15 abr</td><td contenteditable data-type="resp"><span class="tag">AEPE</span><span class="tag">ASCOM</span><span class="tag">EPT</span></td><td contenteditable><span class="risk">Retrabalho por falta de alinhamento técnico</span></td><td contenteditable><span class="mit">Reunião de alinhamento prévio; Aprovação de conceito</span></td><td contenteditable></td></tr>
+    <tr><td class="etapa">1.2</td><td contenteditable>Apresentação e validação com a Presidência</td><td contenteditable>Apresentação institucional da proposta de marca para validação do conceito, identidade visual e diretrizes de aplicação.</td><td contenteditable>16 abr → 25 abr</td><td contenteditable data-type="resp"><span class="tag">AEPE</span><span class="tag">ASCOM</span><span class="tag">EPT</span></td><td contenteditable><span class="risk">Atraso para a validação</span></td><td contenteditable><span class="mit">Apresentação faseada</span></td><td contenteditable></td></tr>
+    <tr><td class="etapa">1.3</td><td contenteditable>Aprovação com a SECOM</td><td contenteditable>Encaminhamento da proposta aprovada para validação formal da SECOM e registro institucional da marca.</td><td contenteditable>28 abr → 30 jun</td><td contenteditable data-type="resp"><span class="tag">ASCOM</span><span class="tag">SECOM</span></td><td contenteditable><span class="risk">Desalinhamento visual com diretrizes institucionais</span></td><td contenteditable><span class="mit">Reuniões de alinhamento e ajustes conforme orientações</span></td><td contenteditable></td></tr>
+    <tr><td class="etapa">1.4</td><td contenteditable>Aplicação na documentação e ambientes EPT</td><td contenteditable>Implementação da identidade visual no portal, plataforma educacional, apresentações, documentos oficiais e materiais de comunicação.</td><td contenteditable>1 jun → 19 jun</td><td contenteditable data-type="resp"><span class="tag">AEPE</span><span class="tag">ASCOM</span><span class="tag">EPT</span></td><td contenteditable><span class="risk">Uso inadequado ou falta de padronização</span></td><td contenteditable><span class="mit">Padrões de aplicação e revisão dos materiais</span></td><td contenteditable></td></tr>
+    </tbody></table></div>
+    <div class="edit-hint">Clique em qualquer célula para editar — as alterações são salvas automaticamente</div>
+  </div>
+</div>
+</section>
+
+<!-- ══════════ PROJETO 2 ══════════ -->
+<section id="proj-2">
+<div class="full slide-light">
+  <div class="slide-header" style="background:var(--gelo);">
+    <div class="slide-header-left">
+      <div class="slide-badge badge-proj">Projeto Pontual · 2</div>
+      <h2 class="slide-title">Portal do Cidadão DETRAN-SP | Educação</h2>
+      <p class="slide-sub">Desenvolvimento e publicação da página institucional da Escola Pública de Trânsito no Portal Detran-SP, com o objetivo de centralizar o acesso aos programas, cursos e iniciativas de educação para o trânsito. A página funcionará como porta de entrada para os usuários interessados nas trilhas de aprendizagem, cursos e conteúdos educacionais oferecidos pela EPT, garantindo organização das informações, facilidade de navegação e alinhamento com a comunicação institucional do DETRAN-SP.</p>
+    </div>
+  </div>
+  <div class="slide-body">
+    <div style="display:flex;gap:10px;margin-bottom:14px;flex-wrap:wrap">
+      <a href="https://www.figma.com/proto/ko79N445cxpSf8fXoMFlNA" style="font-size:13px;color:var(--az-med);text-decoration:none;background:#EBF4FB;border:1px solid var(--az-cl);border-radius:4px;padding:4px 12px;" target="_blank">🔗 Ver Protótipo (Figma)</a>
+      <a href="https://pdspdetranqa.service-now.com/detransp" style="font-size:13px;color:var(--az-med);text-decoration:none;background:#EBF4FB;border:1px solid var(--az-cl);border-radius:4px;padding:4px 12px;" target="_blank">🌐 Ambiente ServiceNow</a>
+    </div>
+    <div class="tbl-wrap">
+    <table class="ept"><thead><tr><th style="width:50px">#</th><th style="width:190px">Etapa</th><th>Descrição</th><th style="width:110px">Período</th><th style="width:110px">Responsável</th><th style="width:155px">Risco</th><th style="width:155px">Mitigação</th><th style="width:150px">Solução</th></tr></thead><tbody>
+    <tr><td class="etapa">2.1</td><td contenteditable>Modelagem da página</td><td contenteditable>Definição da arquitetura da informação, organização dos conteúdos, fluxos de navegação e integração com a plataforma de ensino.</td><td contenteditable>8 mai → 20 mar</td><td contenteditable data-type="resp"><span class="tag">EPT</span></td><td contenteditable><span class="risk">Estrutura de navegação pouco intuitiva</span></td><td contenteditable><span class="mit">Definição de arquitetura da informação adequada</span></td><td contenteditable></td></tr>
+    <tr><td class="etapa">2.2</td><td contenteditable>Revisão da modelagem final</td><td contenteditable>Revisão técnica, institucional e de comunicação da estrutura e conteúdo, assegurando conformidade com as diretrizes DETRAN-SP.</td><td contenteditable>8 mai → 13 nov</td><td contenteditable data-type="resp"><span class="tag">DSV</span><span class="tag">EPT</span></td><td contenteditable><span class="risk">Publicação com inconsistências</span></td><td contenteditable><span class="mit">Validação final com áreas responsáveis</span></td><td contenteditable></td></tr>
+    <tr><td class="etapa">2.4</td><td contenteditable>Protótipo</td><td contenteditable>Elaboração de protótipo visual para simular organização dos conteúdos, navegação e disposição dos elementos antes do desenvolvimento.</td><td contenteditable>2 fev → 20 mar</td><td contenteditable data-type="resp"><span class="tag">DAC</span><span class="tag">PRODESP</span></td><td contenteditable><span class="risk">Protótipo não reflete experiência final</span></td><td contenteditable><span class="mit">Validação com áreas técnicas e comunicação</span></td><td contenteditable></td></tr>
+    <tr><td class="etapa">2.5</td><td contenteditable>Desenvolvimento da página</td><td contenteditable>Desenvolvimento técnico da Landing Page no Portal DETRAN Educação, incluindo layout, conteúdos e integrações com sistemas educacionais.</td><td contenteditable>8 mai → 20 mar</td><td contenteditable data-type="resp"><span class="tag">DAC</span><span class="tag">PRODESP</span></td><td contenteditable><span class="risk">Falta de integração entre áreas</span></td><td contenteditable><span class="mit">Cronograma validado; Ambiente de homologação</span></td><td contenteditable></td></tr>
+    <tr><td class="etapa">2.7</td><td contenteditable>Testes e homologação</td><td contenteditable>Testes funcionais, técnicos e de usabilidade — validação de links, navegação e compatibilidade com dispositivos e navegadores.</td><td contenteditable>A definir</td><td contenteditable data-type="resp"><span class="tag">DAC</span><span class="tag">PRODESP</span><span class="tag">EPT</span></td><td contenteditable><span class="risk">Falhas de integração com sistemas externos</span></td><td contenteditable><span class="mit">Checklist completo de testes funcionais</span></td><td contenteditable></td></tr>
+    <tr><td class="etapa">2.6</td><td contenteditable>Publicação da página</td><td contenteditable>Disponibilização oficial da Landing Page após validação final das áreas responsáveis e testes de funcionamento institucional.</td><td contenteditable>Após validação</td><td contenteditable data-type="resp"><span class="tag">DAC</span><span class="tag">PRODESP</span></td><td contenteditable><span class="risk">Publicação com erros ou falhas</span></td><td contenteditable><span class="mit">Testes finais e revisão completa</span></td><td contenteditable></td></tr>
+    </tbody></table></div>
+    <div class="edit-hint">Clique em qualquer célula para editar</div>
+  </div>
+</div>
+</section>
+
+<!-- ══════════ PROJETO 3 ══════════ -->
+<section id="proj-3">
+<div class="full slide-light">
+  <div class="slide-header" style="background:var(--gelo);">
+    <div class="slide-header-left">
+      <div class="slide-badge badge-proj">Projeto Pontual · 3</div>
+      <h2 class="slide-title">Atualização da Plataforma Moodle</h2>
+      <p class="slide-sub">Processo de modernização da plataforma educacional da EPT por meio da atualização do ambiente baseado no Moodle da versão 3.0 para a versão 5.0. A atualização contempla melhorias significativas em segurança, desempenho, usabilidade, compatibilidade com novos recursos educacionais e suporte a integrações tecnológicas. A iniciativa visa garantir maior estabilidade da plataforma, aprimorar a experiência do usuário e preparar o ambiente para a expansão da oferta de cursos digitais no âmbito da EPT Digital.</p>
+    </div>
+  </div>
+  <div class="slide-body">
+    <div style="margin-bottom:10px;display:flex;gap:8px">
+      <a href="https://ead.detran.sp.gov.br/" style="font-size:13px;color:var(--az-med);text-decoration:none;background:#EBF4FB;border:1px solid var(--az-cl);border-radius:4px;padding:4px 12px;" target="_blank">🎓 Acessar Plataforma EAD</a>
+    </div>
+    <div class="tbl-wrap">
+    <table class="ept"><thead><tr><th style="width:50px">#</th><th style="width:200px">Etapa</th><th>Descrição</th><th style="width:100px">Período</th><th style="width:110px">Responsável</th><th style="width:150px">Risco</th><th style="width:150px">Mitigação</th><th style="width:150px">Solução</th></tr></thead><tbody>
+    <tr><td class="etapa">3.1</td><td contenteditable>Atualização da Plataforma</td><td contenteditable>Execução da atualização técnica do Moodle 3.0 para 5.0, incluindo ambiente tecnológico, compatibilidade de plugins e banco de dados.</td><td contenteditable>3–9 jan</td><td contenteditable data-type="resp"><span class="tag">EPT/CET</span></td><td contenteditable><span class="risk">Incompatibilidade de plugins, perda de dados</span></td><td contenteditable><span class="mit">Backup completo; ambiente de homologação</span></td><td contenteditable></td></tr>
+    <tr><td class="etapa">3.2</td><td contenteditable>Remodelagem visual e homologação</td><td contenteditable>Testes técnicos, funcionais e de usabilidade com homologação pelas áreas responsáveis antes da publicação em produção.</td><td contenteditable>20 nov 2025 → 2 fev</td><td contenteditable data-type="resp"><span class="tag">EPT/CET</span><span class="tag">SETEF</span><span class="tag">SOPED</span></td><td contenteditable><span class="risk">Falhas técnicas; atraso na validação</span></td><td contenteditable><span class="mit">Testes em ambiente de homologação</span></td><td contenteditable></td></tr>
+    <tr><td class="etapa">3.3</td><td contenteditable>Revisão da AEPE</td><td contenteditable>Avaliação estratégica — aderência às diretrizes da EPT Digital, experiência do usuário e funcionamento das trilhas de aprendizagem.</td><td contenteditable>3 fev → a definir</td><td contenteditable data-type="resp"><span class="tag">AEPE</span></td><td contenteditable><span class="risk">Identificação tardia de melhorias</span></td><td contenteditable><span class="mit">Manual do usuário; testes funcionais prévios</span></td><td contenteditable></td></tr>
+    <tr><td class="etapa">3.4</td><td contenteditable>Avaliação da identidade visual</td><td contenteditable>Avaliação pela ASCOM — layout, cores, tipografia e aplicação da marca às diretrizes de comunicação do DETRAN-SP.</td><td contenteditable>A definir</td><td contenteditable data-type="resp"><span class="tag">ASCOM</span></td><td contenteditable><span class="risk">Inadequação às diretrizes institucionais</span></td><td contenteditable><span class="mit">Alinhamento prévio com ASCOM</span></td><td contenteditable></td></tr>
+    <tr><td class="etapa">3.5</td><td contenteditable>Ajustes prévios à Presidência</td><td contenteditable>Validação pelas áreas técnicas e institucionais — funcionamento, integração com sistemas e aderência às diretrizes EPT Digital.</td><td contenteditable>Pré-Presidência</td><td contenteditable data-type="resp"><span class="tag">EPT/CET</span><span class="tag">SETEF</span><span class="tag">SOPED</span></td><td contenteditable><span class="risk">Falhas operacionais ou inconsistências</span></td><td contenteditable><span class="mit">Compartilhamento antecipado com áreas</span></td><td contenteditable></td></tr>
+    <tr><td class="etapa">3.6</td><td contenteditable>Apresentação à Presidência</td><td contenteditable>Apresentação institucional da plataforma atualizada à Presidência do DETRAN-SP, com destaque para melhorias e funcionalidades educacionais.</td><td contenteditable>A definir</td><td contenteditable data-type="resp"><span class="tag">PR</span></td><td contenteditable><span class="risk">Solicitação de alterações estruturais</span></td><td contenteditable><span class="mit">Checklist validado; validação prévia</span></td><td contenteditable></td></tr>
+    <tr><td class="etapa">3.7</td><td contenteditable>Ajustes finais</td><td contenteditable>Ajustes técnicos, operacionais ou visuais identificados nas etapas de revisão institucional ou após apresentação à Presidência.</td><td contenteditable>A definir</td><td contenteditable data-type="resp"><span class="tag">EPT/CET</span></td><td contenteditable><span class="risk">Retrabalho técnico</span></td><td contenteditable><span class="mit">Priorização dos ajustes críticos</span></td><td contenteditable></td></tr>
+    <tr><td class="etapa">3.8</td><td contenteditable>Definição de login do usuário</td><td contenteditable>Regras de autenticação e acesso — integração com Portal DETRAN-SP, diferenciação de cursos livres e cursos com requisitos vinculados à CNH.</td><td contenteditable>A definir</td><td contenteditable data-type="resp"><span class="tag">DTI</span></td><td contenteditable><span class="risk">Falhas de integração entre portal e plataforma</span></td><td contenteditable><span class="mit">Testes de integração e simulação de acessos</span></td><td contenteditable></td></tr>
+    <tr><td class="etapa">3.9</td><td contenteditable>Publicação da Plataforma</td><td contenteditable>Disponibilização oficial da nova versão após conclusão das etapas de atualização, validação e ajustes técnicos.</td><td contenteditable>A definir</td><td contenteditable data-type="resp"><span class="tag">EPT/CET</span></td><td contenteditable><span class="risk">Instabilidade inicial da plataforma</span></td><td contenteditable><span class="mit">Migração gradual; monitoramento contínuo</span></td><td contenteditable></td></tr>
+    </tbody></table></div>
+    <div class="edit-hint">Clique em qualquer célula para editar</div>
+  </div>
+</div>
+</section>
+
+<!-- ══════════ PROJETO 4 ══════════ -->
+<section id="proj-4">
+<div class="full slide-light">
+  <div class="slide-header" style="background:var(--gelo);">
+    <div class="slide-header-left">
+      <div class="slide-badge badge-proj">Projeto Pontual · 4</div>
+      <h2 class="slide-title">Power App — Ações Integradas de Segurança Viária</h2>
+      <p class="slide-sub">Implantação e lançamento do Power App de Ações Integradas de Segurança Viária, ferramenta digital destinada ao registro, monitoramento e consolidação das ações de fiscalização, educação de trânsito realizadas pelas áreas responsáveis. O aplicativo permitirá padronizar o registro das atividades, apoiar o planejamento das ações integradas de segurança viária e consolidar informações estratégicas para acompanhamento institucional.</p>
+    </div>
+  </div>
+  <div class="slide-body">
+    <div style="margin-bottom:10px">
+      <a href="https://apps.powerapps.com/play/e/default-3a78b0cd-7c8e-4929-83d5-190a6cc01365/a/2eba773d-1c29-49a8-b3f2-95f576bb28b7" style="font-size:13px;color:var(--az-med);text-decoration:none;background:#EBF4FB;border:1px solid var(--az-cl);border-radius:4px;padding:4px 12px;" target="_blank">📱 Acessar Power App</a>
+    </div>
+    <div class="tbl-wrap">
+    <table class="ept"><thead><tr><th style="width:50px">#</th><th style="width:190px">Etapa</th><th>Descrição</th><th style="width:120px">Período</th><th style="width:120px">Responsável</th><th style="width:150px">Risco</th><th style="width:150px">Mitigação</th><th style="width:150px">Solução</th></tr></thead><tbody>
+    <tr><td class="etapa">4.1</td><td contenteditable>Webinário Institucional</td><td contenteditable>Webinário para apresentação do app, testes operacionais e validação de funcionalidades pelas áreas parceiras.</td><td contenteditable>6 jan → 4 mar</td><td contenteditable data-type="resp"><span class="tag">EPT/CET</span><span class="tag">DFT</span><span class="tag">DDA</span></td><td contenteditable><span class="risk">Atrasos; instabilidade do sistema</span></td><td contenteditable><span class="mit">Ambiente controlado; registro de erros</span></td><td contenteditable></td></tr>
+    <tr><td class="etapa">4.2</td><td contenteditable>Período de testes operacionais</td><td contenteditable>Testes operacionais do aplicativo com os pontos focais das áreas responsáveis antes do lançamento oficial.</td><td contenteditable>4–5 mar</td><td contenteditable data-type="resp"><span class="tag">EPT/CET</span><span class="tag">DFT</span><span class="tag">DDA</span></td><td contenteditable><span class="risk">Falta de dados; inconsistências para BR</span></td><td contenteditable><span class="mit">Data limite para preenchimento pactuada</span></td><td contenteditable></td></tr>
+    <tr><td class="etapa">4.3</td><td contenteditable>Alimentação do legado</td><td contenteditable>Inserção no sistema das informações referentes às ações de segurança viária realizadas anteriormente ao início do uso.</td><td contenteditable>6 mar</td><td contenteditable data-type="resp"><span class="tag">EPT/CET</span><span class="tag">DFT</span><span class="tag">DDA</span></td><td contenteditable><span class="risk">Resistência interna; nomeação de responsáveis</span></td><td contenteditable><span class="mit">Comunicação institucional formal</span></td><td contenteditable></td></tr>
+    <tr><td class="etapa">4.4</td><td contenteditable>Lançamento — Início oficial</td><td contenteditable>Início oficial da utilização do aplicativo pelas áreas responsáveis pelas ações integradas de segurança viária.</td><td contenteditable>12 mar</td><td contenteditable data-type="resp"><span class="tag">EPT/CET</span><span class="tag">DFT</span><span class="tag">DDA</span></td><td contenteditable><span class="risk">Incompatibilidade de bases</span></td><td contenteditable><span class="mit">Mapeamento técnico prévio</span></td><td contenteditable></td></tr>
+    <tr><td class="etapa">4.5</td><td contenteditable>Integração com bases (BR)</td><td contenteditable>Integração do aplicativo com bases de dados para alimentação da Bonificação por Resultados e indicadores estratégicos.</td><td contenteditable>11 mar</td><td contenteditable data-type="resp"><span class="tag">EPT/CET</span><span class="tag">AEGE</span></td><td contenteditable><span class="risk">Indicadores mal definidos</span></td><td contenteditable><span class="mit">Definição prévia de KPIs</span></td><td contenteditable></td></tr>
+    <tr><td class="etapa">4.6</td><td contenteditable>Dashboard — Informações de Educação</td><td contenteditable>Painel de visualização de dados com indicadores consolidados das ações de educação para o trânsito registradas no app.</td><td contenteditable>12–30 mar</td><td contenteditable data-type="resp"><span class="tag">EPT/CET</span><span class="tag">ASCOM</span><span class="tag">DFT</span></td><td contenteditable><span class="risk">Dificuldade no desenvolvimento do dashboard</span></td><td contenteditable><span class="mit">Validação antecipada dos indicadores</span></td><td contenteditable></td></tr>
+    <tr><td class="etapa">4.7</td><td contenteditable>Relatório final</td><td contenteditable>Relatório consolidado com KPIs, resultados obtidos, nível de satisfação dos usuários e sugestões de melhoria.</td><td contenteditable>23–30 mar</td><td contenteditable data-type="resp"><span class="tag">EPT/CET</span><span class="tag">DFT</span></td><td contenteditable><span class="risk">Dados insuficientes para análise</span></td><td contenteditable><span class="mit">Definição prévia de KPIs e fontes</span></td><td contenteditable></td></tr>
+    </tbody></table></div>
+    <div class="edit-hint">Clique em qualquer célula para editar</div>
+  </div>
+</div>
+</section>
+
+<!-- ══════════ PROJETO 5 ══════════ -->
+<section id="proj-5">
+<div class="full slide-light">
+  <div class="slide-header" style="background:var(--gelo);">
+    <div class="slide-header-left">
+      <div class="slide-badge badge-proj">Projeto Pontual · 5</div>
+      <h2 class="slide-title">Migração do Moodle para Multicloud</h2>
+      <p class="slide-sub">Processo de migração da plataforma educacional Moodle para uma infraestrutura de hospedagem em ambiente multicloud, com o objetivo de garantir maior escalabilidade, disponibilidade, segurança e capacidade de atendimento ao crescimento do número de usuários. A iniciativa contempla a contratação de empresa especializada para hospedagem da plataforma, suporte técnico contínuo e definição da capacidade de atendimento da plataforma com base no volume estimado de acessos diários.</p>
+    </div>
+  </div>
+  <div class="slide-body">
+    <div class="tbl-wrap">
+    <table class="ept"><thead><tr><th style="width:50px">#</th><th style="width:220px">Etapa</th><th>Descrição</th><th style="width:110px">Período</th><th style="width:110px">Responsável</th><th style="width:155px">Risco</th><th style="width:155px">Mitigação</th><th style="width:150px">Solução</th></tr></thead><tbody>
+    <tr><td class="etapa">5.1</td><td contenteditable>Definição de empresa contratada</td><td contenteditable>Definição da empresa para hospedagem multicloud considerando segurança, disponibilidade, escalabilidade e compatibilidade técnica.</td><td contenteditable>1–13 abr</td><td contenteditable data-type="resp"><span class="tag">DSV</span><span class="tag">EPT</span></td><td contenteditable><span class="risk">Incompatibilidade técnica da solução</span></td><td contenteditable><span class="mit">Alinhamento técnico prévio; análise comparativa</span></td><td contenteditable></td></tr>
+    <tr><td class="etapa">5.2</td><td contenteditable>Contratação de empresa</td><td contenteditable>Contratação de empresa especializada para hospedagem do Moodle em multicloud com alta disponibilidade e escalabilidade.</td><td contenteditable>13–24 abr</td><td contenteditable data-type="resp"><span class="tag">DSV</span><span class="tag">EPT</span><span class="tag">DAL</span></td><td contenteditable><span class="risk">Dependência excessiva do fornecedor</span></td><td contenteditable><span class="mit">SLA definido; acompanhamento periódico</span></td><td contenteditable></td></tr>
+    <tr><td class="etapa">5.3</td><td contenteditable>Suporte e Manutenção</td><td contenteditable>Estabelecimento de serviço contínuo de suporte técnico e manutenção da infraestrutura da plataforma educacional.</td><td contenteditable>27 abr</td><td contenteditable data-type="resp"><span class="tag">Contratada</span></td><td contenteditable><span class="risk">Alto tempo de atendimento a incidentes</span></td><td contenteditable><span class="mit">Níveis de SLA no contrato; monitoramento</span></td><td contenteditable></td></tr>
+    <tr><td class="etapa">5.4</td><td contenteditable>Definição de volume de usuários/dia</td><td contenteditable>Definição da capacidade estimada de usuários simultâneos e acessos diários considerando crescimento previsto da EPT Digital.</td><td contenteditable>27–30 abr</td><td contenteditable data-type="resp"><span class="tag">EPT/CET</span><span class="tag">DAL</span></td><td contenteditable><span class="risk">Subdimensionamento da infraestrutura</span></td><td contenteditable><span class="mit">Estudo de capacidade com margem de crescimento</span></td><td contenteditable></td></tr>
+    </tbody></table></div>
+    <div class="edit-hint">Clique em qualquer célula para editar</div>
+  </div>
+</div>
+</section>
+
+<!-- ══════════ PROJETO 6 ══════════ -->
+<section id="proj-6">
+<div class="full slide-light">
+  <div class="slide-header" style="background:var(--gelo);">
+    <div class="slide-header-left">
+      <div class="slide-badge badge-proj">Projeto Pontual · 6</div>
+      <h2 class="slide-title">Contratação para Conteúdo Moodle</h2>
+      <p class="slide-sub">Identificação de empresas prestadoras de serviços já parceiras da Prodesp. Processo de contratação de empresa especializada para apoiar a EPT na melhoria do ambiente educacional baseado no Moodle, contemplando suporte técnico, desenvolvimento de conteúdos educacionais digitais, modelagem pedagógica e apoio na produção de cursos em formato compatível com a plataforma. A iniciativa visa garantir qualidade pedagógica, padronização dos conteúdos e evolução contínua da plataforma educacional.</p>
+    </div>
+  </div>
+  <div class="slide-body">
+    <div class="tbl-wrap">
+    <table class="ept"><thead><tr><th style="width:50px">#</th><th style="width:210px">Etapa</th><th>Descrição</th><th style="width:110px">Período</th><th style="width:110px">Responsável</th><th style="width:150px">Risco</th><th style="width:150px">Mitigação</th><th style="width:150px">Solução</th></tr></thead><tbody>
+    <tr><td class="etapa">6.1</td><td contenteditable>Empresa para criação de conteúdo</td><td contenteditable>Contratação de empresa especializada na produção de conteúdos educacionais digitais para o Moodle da EPT.</td><td contenteditable>1–30 abr</td><td contenteditable data-type="resp"><span class="tag">DTI</span><span class="tag">DSV</span><span class="tag">PRODESP</span><span class="tag">DAL</span></td><td contenteditable><span class="risk">Conteúdo sem aderência pedagógica</span></td><td contenteditable><span class="mit">Diretrizes claras; acompanhamento técnico</span></td><td contenteditable></td></tr>
+    <tr><td class="etapa">6.2</td><td contenteditable>Análise de propostas</td><td contenteditable>Avaliação técnica das propostas verificando conformidade com requisitos técnicos, pedagógicos e institucionais.</td><td contenteditable>1–13 abr</td><td contenteditable data-type="resp"><span class="tag">DSV/EPT</span></td><td contenteditable><span class="risk">Proposta não atende plenamente as necessidades</span></td><td contenteditable><span class="mit">Critérios objetivos de avaliação</span></td><td contenteditable></td></tr>
+    <tr><td class="etapa">6.3</td><td contenteditable>Documentos preparatórios (ETP, TR, DFD, Mapa de Riscos)</td><td contenteditable>Elaboração dos documentos para instrução do processo de contratação conforme normas da administração pública.</td><td contenteditable>13–24 abr</td><td contenteditable data-type="resp"><span class="tag">EPT/CET</span></td><td contenteditable><span class="risk">Inconsistências nos documentos</span></td><td contenteditable><span class="mit">Revisão técnica; modelos institucionais</span></td><td contenteditable></td></tr>
+    <tr><td class="etapa">6.4</td><td contenteditable>Parecer técnico/jurídico</td><td contenteditable>Análise e emissão de parecer sobre viabilidade da contratação e conformidade com normas administrativas aplicáveis.</td><td contenteditable>27 abr</td><td contenteditable data-type="resp"><span class="tag">CJ</span></td><td contenteditable><span class="risk">Inconformidades exigindo revisão</span></td><td contenteditable><span class="mit">Revisão prévia da documentação</span></td><td contenteditable></td></tr>
+    <tr><td class="etapa">6.5</td><td contenteditable>Encaminhamento para contratação</td><td contenteditable>Encaminhamento formal do processo para as áreas responsáveis após conclusão das etapas de análise e validação.</td><td contenteditable>27–30 abr</td><td contenteditable data-type="resp"><span class="tag">DAL</span><span class="tag">PR</span></td><td contenteditable><span class="risk">Atraso na tramitação administrativa</span></td><td contenteditable><span class="mit">Acompanhamento contínuo do processo</span></td><td contenteditable></td></tr>
+    <tr><td class="etapa">6.6</td><td contenteditable>Início do contrato</td><td contenteditable>Início da execução contratual com definição do plano de trabalho, cronograma e alinhamento das responsabilidades.</td><td contenteditable>A definir</td><td contenteditable data-type="resp"><span class="tag">EPT</span><span class="tag">Contratada</span></td><td contenteditable><span class="risk">Atrasos ou desalinhamento de escopo</span></td><td contenteditable><span class="mit">Reunião inicial de alinhamento; cronograma claro</span></td><td contenteditable></td></tr>
+    </tbody></table></div>
+    <div class="edit-hint">Clique em qualquer célula para editar</div>
+  </div>
+</div>
+</section>
+
+<!-- ══════════ PROJETO 7 ══════════ -->
+<section id="proj-7">
+<div class="full slide-light">
+  <div class="slide-header" style="background:var(--gelo);">
+    <div class="slide-header-left">
+      <div class="slide-badge badge-proj">Projeto Pontual · 7</div>
+      <h2 class="slide-title">Aquisição de Softwares e Aplicações para Produção de Conteúdos</h2>
+      <p class="slide-sub">Processo de aquisição de softwares e aplicações especializadas para produção de conteúdos educacionais digitais a serem utilizados na plataforma de ensino da EPT.</p>
+    </div>
+  </div>
+  <div class="slide-body">
+    <div class="tbl-wrap">
+    <table class="ept"><thead><tr><th style="width:50px">#</th><th style="width:220px">Etapa</th><th>Descrição</th><th style="width:110px">Período</th><th style="width:110px">Responsável</th><th style="width:155px">Risco</th><th style="width:155px">Mitigação</th><th style="width:150px">Solução</th></tr></thead><tbody>
+    <tr><td class="etapa">7.1</td><td contenteditable>Documentos preparatórios (ETP, TR, DFD, Mapa de Riscos)</td><td contenteditable>Elaboração dos documentos técnicos para instrução do processo — justificativa da contratação e especificação técnica das ferramentas.</td><td contenteditable>4–13 mai</td><td contenteditable data-type="resp"><span class="tag">EPT/CET</span></td><td contenteditable><span class="risk">Especificação inadequada; pendências documentais</span></td><td contenteditable><span class="mit">Checklist documental; revisão técnica</span></td><td contenteditable></td></tr>
+    <tr><td class="etapa">7.2</td><td contenteditable>Instrução de processo SEI</td><td contenteditable>Abertura e formalização do processo administrativo no SEI com inserção dos documentos preparatórios e informações obrigatórias.</td><td contenteditable>13–22 mai</td><td contenteditable data-type="resp"><span class="tag">EPT/CET</span></td><td contenteditable><span class="risk">Inconsistências ou documentos ausentes</span></td><td contenteditable><span class="mit">Checklist antes da abertura do processo</span></td><td contenteditable></td></tr>
+    <tr><td class="etapa">7.3</td><td contenteditable>Tramitação do processo SEI</td><td contenteditable>Encaminhamento e acompanhamento do processo entre as áreas responsáveis por análise técnica, administrativa e jurídica.</td><td contenteditable>25 mai</td><td contenteditable data-type="resp"><span class="tag">DAL</span></td><td contenteditable><span class="risk">Atrasos na tramitação</span></td><td contenteditable><span class="mit">Acompanhamento contínuo do processo</span></td><td contenteditable></td></tr>
+    <tr><td class="etapa">7.4</td><td contenteditable>Homologação</td><td contenteditable>Conclusão do processo administrativo com a homologação da aquisição e autorização formal para contratação das ferramentas.</td><td contenteditable>26–29 mai</td><td contenteditable data-type="resp"><span class="tag">DAL</span></td><td contenteditable><span class="risk">Questionamentos técnicos ou administrativos</span></td><td contenteditable><span class="mit">Documentação completa e validada previamente</span></td><td contenteditable></td></tr>
+    </tbody></table></div>
+    <div class="edit-hint">Clique em qualquer célula para editar</div>
+  </div>
+</div>
+</section>
+
+<!-- ══════════ PROJETO 8 ══════════ -->
+<section id="proj-8">
+<div class="full slide-light">
+  <div class="slide-header" style="background:var(--gelo);">
+    <div class="slide-header-left">
+      <div class="slide-badge badge-proj">Projeto Pontual · 8</div>
+      <h2 class="slide-title">Montagem de Estúdio de Produção</h2>
+      <p class="slide-sub">Estruturação de estúdio destinado à produção de conteúdos educacionais digitais da EPT, contemplando adequação do espaço físico, instalação de mobiliário e aquisição de equipamentos necessários para gravação de aulas, produção audiovisual e desenvolvimento de materiais educacionais. O estúdio permitirá ampliar a capacidade institucional de produção de cursos e conteúdos para a plataforma de ensino.</p>
+    </div>
+  </div>
+  <div class="slide-body">
+    <div class="tbl-wrap">
+    <table class="ept"><thead><tr><th style="width:50px">#</th><th style="width:210px">Etapa</th><th>Descrição</th><th style="width:110px">Período</th><th style="width:110px">Responsável</th><th style="width:155px">Risco</th><th style="width:155px">Mitigação</th><th style="width:150px">Solução</th></tr></thead><tbody>
+    <tr><td class="etapa">8.1</td><td contenteditable>Entrega do espaço reformado c/ mobiliário</td><td contenteditable>Disponibilização do espaço físico reformado e equipado com mobiliário adequado para funcionamento do estúdio de produção.</td><td contenteditable>15 mar → 20 abr</td><td contenteditable data-type="resp"><span class="tag">AEPE</span><span class="tag">ASCOM</span><span class="tag">EPT</span></td><td contenteditable><span class="risk">Atrasos na conclusão da reforma</span></td><td contenteditable><span class="mit">Acompanhamento do cronograma de obra</span></td><td contenteditable></td></tr>
+    <tr><td class="etapa">8.2</td><td contenteditable>Especificação dos equipamentos</td><td contenteditable>Definição das especificações técnicas de câmeras, microfones, iluminação, computadores e demais recursos audiovisuais.</td><td contenteditable>15 mar → 20 abr</td><td contenteditable data-type="resp"><span class="tag">AEPE</span><span class="tag">EPT</span><span class="tag">DTI</span></td><td contenteditable><span class="risk">Equipamentos incompatíveis com necessidades</span></td><td contenteditable><span class="mit">Validação técnica com área de tecnologia</span></td><td contenteditable></td></tr>
+    <tr><td class="etapa">8.3</td><td contenteditable>Alinhamento com DTI</td><td contenteditable>Alinhamento com a TI para compatibilidade dos equipamentos com a infraestrutura institucional e integração com sistemas de armazenamento.</td><td contenteditable>15 mar → 20 abr</td><td contenteditable data-type="resp"><span class="tag">AEPE</span><span class="tag">EPT</span></td><td contenteditable><span class="risk">Incompatibilidade tecnológica</span></td><td contenteditable><span class="mit">Reuniões técnicas; validação antes da aquisição</span></td><td contenteditable></td></tr>
+    <tr><td class="etapa">8.4</td><td contenteditable>Aquisição dos materiais não existentes</td><td contenteditable>Aquisição dos equipamentos e materiais que não estejam disponíveis na estrutura atual do DETRAN-SP para o funcionamento do estúdio.</td><td contenteditable>15 mar → 20 abr</td><td contenteditable data-type="resp"><span class="tag">AEPE</span><span class="tag">EPT</span><span class="tag">ASCOM</span></td><td contenteditable><span class="risk">Atrasos na aquisição ou falta de fornecedores</span></td><td contenteditable><span class="mit">Planejamento antecipado da aquisição</span></td><td contenteditable></td></tr>
+    <tr><td class="etapa">8.5</td><td contenteditable>Entrega oficial</td><td contenteditable>Entrega do espaço reformado e equipado com funcionamento completo do estúdio de produção de cursos da EPT.</td><td contenteditable>20 abr 2026</td><td contenteditable data-type="resp"><span class="tag">AEPE</span></td><td contenteditable><span class="risk">Atraso na entrega; problemas de infraestrutura</span></td><td contenteditable><span class="mit">Testes técnicos completos (acústica, rede, energia)</span></td><td contenteditable></td></tr>
+    </tbody></table></div>
+    <div class="edit-hint">Clique em qualquer célula para editar</div>
+  </div>
+</div>
+</section>
+
+
+<!-- ══════════ JORNADAS — VISÃO GERAL ══════════ -->
+<section>
+<div class="full slide-white">
+  <div class="slide-header">
+    <div class="slide-header-left">
+      <div class="slide-label">Jornadas de Aprendizagem</div>
+      <h2 class="slide-title">4 Jornadas Digitais Integradas</h2>
+      <p class="slide-sub">Fluxos do Portal do Cidadão DETRAN-SP até a certificação — para cidadãos, motoristas profissionais, condutores infratores e servidores</p>
+    </div>
+  </div>
+  <div class="slide-body">
+    <div class="j-grid">
+
+      <div class="j-card">
+        <div class="j-head" style="background:linear-gradient(100deg,#004077,#005CA8)">
+          <div class="j-head-label">Jornada 1</div>
+          <div class="j-head-title">Cidadão — Generalizado</div>
+          <div class="j-head-desc">Acesso livre a cursos educacionais da EPT de forma simples e integrada.</div>
+        </div>
+        <div class="j-steps">
+          <div class="j-step"><div class="j-ico">1</div><div class="j-lbl">Portal Cidadão</div></div>
+          <div class="j-arr">›</div>
+          <div class="j-step"><div class="j-ico">2</div><div class="j-lbl">Login Gov.br</div></div>
+          <div class="j-arr">›</div>
+          <div class="j-step"><div class="j-ico">3</div><div class="j-lbl">Acesso ao Curso</div></div>
+          <div class="j-arr">›</div>
+          <div class="j-step"><div class="j-ico">4</div><div class="j-lbl">Realização</div></div>
+          <div class="j-arr">›</div>
+          <div class="j-step"><div class="j-ico">5</div><div class="j-lbl">Certificação</div></div>
+        </div>
+      </div>
+
+      <div class="j-card">
+        <div class="j-head" style="background:linear-gradient(100deg,#005CA8,#3490CE)">
+          <div class="j-head-label">Jornada 2</div>
+          <div class="j-head-title">Motorista Profissional</div>
+          <div class="j-head-desc">Cursos especializados com validação de prontuário e registro obrigatório no RENACH.</div>
+        </div>
+        <div class="j-steps">
+          <div class="j-step"><div class="j-ico" style="background:#005CA8">1</div><div class="j-lbl">Portal Cidadão</div></div>
+          <div class="j-arr">›</div>
+          <div class="j-step"><div class="j-ico" style="background:#005CA8">2</div><div class="j-lbl">Validação Prontuário</div></div>
+          <div class="j-arr">›</div>
+          <div class="j-step"><div class="j-ico" style="background:#005CA8">3</div><div class="j-lbl">Plataforma</div></div>
+          <div class="j-arr">›</div>
+          <div class="j-step"><div class="j-ico" style="background:#005CA8">4</div><div class="j-lbl">Curso + RENACH</div></div>
+          <div class="j-arr">›</div>
+          <div class="j-step"><div class="j-ico" style="background:#005CA8">5</div><div class="j-lbl">Cert. + Taxa + Prova</div></div>
+        </div>
+      </div>
+
+      <div class="j-card">
+        <div class="j-head" style="background:linear-gradient(100deg,#1a4d7a,#2d7db3)">
+          <div class="j-head-label">Jornada 3</div>
+          <div class="j-head-title">Condutor Infrator — Reciclagem</div>
+          <div class="j-head-desc">Curso de reciclagem digital integrado aos sistemas de habilitação e cumprimento legal.</div>
+        </div>
+        <div class="j-steps">
+          <div class="j-step"><div class="j-ico" style="background:#1a4d7a">1</div><div class="j-lbl">Portal Cidadão</div></div>
+          <div class="j-arr">›</div>
+          <div class="j-step"><div class="j-ico" style="background:#1a4d7a">2</div><div class="j-lbl">Validação Prontuário</div></div>
+          <div class="j-arr">›</div>
+          <div class="j-step"><div class="j-ico" style="background:#1a4d7a">3</div><div class="j-lbl">Plataforma</div></div>
+          <div class="j-arr">›</div>
+          <div class="j-step"><div class="j-ico" style="background:#1a4d7a">4</div><div class="j-lbl">Reciclagem</div></div>
+          <div class="j-arr">›</div>
+          <div class="j-step"><div class="j-ico" style="background:#1a4d7a">5</div><div class="j-lbl">RENACH+Taxa+Prova</div></div>
+        </div>
+      </div>
+
+      <div class="j-card">
+        <div class="j-head" style="background:linear-gradient(100deg,#003364,#004da6)">
+          <div class="j-head-label">Jornada 4</div>
+          <div class="j-head-title">Servidor DETRAN-SP</div>
+          <div class="j-head-desc">Capacitação contínua com integração aos sistemas de gestão de pessoas e metas BR 2026.</div>
+        </div>
+        <div class="j-steps">
+          <div class="j-step"><div class="j-ico" style="background:#003364">1</div><div class="j-lbl">Acesso Plataforma</div></div>
+          <div class="j-arr">›</div>
+          <div class="j-step"><div class="j-ico" style="background:#003364">2</div><div class="j-lbl">Login Gov.br</div></div>
+          <div class="j-arr">›</div>
+          <div class="j-step"><div class="j-ico" style="background:#003364">3</div><div class="j-lbl">Trilhas Obrigatórias</div></div>
+          <div class="j-arr">›</div>
+          <div class="j-step"><div class="j-ico" style="background:#003364">4</div><div class="j-lbl">Cursos + Avaliação</div></div>
+          <div class="j-arr">›</div>
+          <div class="j-step"><div class="j-ico" style="background:#003364">5</div><div class="j-lbl">Cert. + CGGP + BR</div></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- ══════════ JORNADA 1 DETALHADA ══════════ -->
+<section>
+<div class="full slide-light">
+  <div class="slide-header" style="background:var(--gelo);">
+    <div class="slide-header-left">
+      <div class="slide-badge badge-jorn">Jornada de Aprendizagem · 1</div>
+      <h2 class="slide-title">Cidadão — Generalizado</h2>
+      <p class="slide-sub">Garantir que o cidadão consiga acessar, realizar e concluir cursos educacionais da EPT Digital de forma simples, segura e integrada ao Portal DETRAN-SP.</p>
+    </div>
+  </div>
+  <div class="slide-body">
+    <div class="tbl-wrap">
+    <table class="ept"><thead><tr><th style="width:50px">#</th><th style="width:175px">Etapa</th><th>Descrição</th><th style="width:70px">Resp.</th><th style="width:145px">Risco</th><th style="width:145px">Mitigação</th><th style="width:175px">Solução</th><th style="width:80px">Prazo</th></tr></thead><tbody>
+    <tr><td class="etapa">1.1</td><td contenteditable>Portal do Cidadão Detran-SP</td><td contenteditable>Ponto inicial de acesso do cidadão — inclui catálogo de cursos EPT integrado à Carta de Serviços do Portal.</td><td contenteditable data-type="resp"><span class="tag">DAC</span></td><td contenteditable><span class="risk">Dificuldade de localização dos cursos</span></td><td contenteditable><span class="mit">Organização e destaque para ações educacionais</span></td><td contenteditable>Integração do catálogo com botões de acesso direto e interface padronizada</td><td contenteditable></td></tr>
+    <tr><td class="etapa">1.2</td><td contenteditable>Login na plataforma de ensino</td><td contenteditable>Autenticação do usuário — o cidadão loga uma vez no portal e já entra autenticado na plataforma de ensino.</td><td contenteditable data-type="resp"><span class="tag">DTI</span></td><td contenteditable><span class="risk">Falhas no processo de autenticação</span></td><td contenteditable><span class="mit">Integração adequada e testes de acesso prévios</span></td><td contenteditable>Acesso via Gov.br integrado ao portal — login único</td><td contenteditable></td></tr>
+    <tr><td class="etapa">1.3</td><td contenteditable>Acesso à Plataforma de Ensino</td><td contenteditable>Ambiente digital onde o cidadão acessa os cursos, conteúdos e atividades. Link direciona para a página de inscrição do curso específico.</td><td contenteditable data-type="resp"><span class="tag">DTI</span></td><td contenteditable><span class="risk">Instabilidade ou dificuldade de navegação</span></td><td contenteditable><span class="mit">Monitoramento técnico e melhorias contínuas</span></td><td contenteditable>Link direto para página de inscrição do curso — não para a home geral</td><td contenteditable></td></tr>
+    <tr><td class="etapa">1.4</td><td contenteditable>Realização do curso</td><td contenteditable>Realização do curso com acesso aos conteúdos, atividades e acompanhamento do progresso de aprendizagem.</td><td contenteditable data-type="resp">—</td><td contenteditable><span class="risk">Baixa conclusão dos cursos</span></td><td contenteditable><span class="mit">Conteúdos atrativos e organização didática adequada</span></td><td contenteditable>Trilhas em microlearning, design responsivo, salvamento automático de progresso</td><td contenteditable></td></tr>
+    <tr><td class="etapa">1.5</td><td contenteditable>Certificação</td><td contenteditable>Emissão de certificado digital ao cidadão após conclusão do curso e cumprimento dos requisitos estabelecidos.</td><td contenteditable data-type="resp">—</td><td contenteditable><span class="risk">Falhas na emissão ou registro do certificado</span></td><td contenteditable><span class="mit">Testes prévios do sistema de certificação</span></td><td contenteditable>Emissão automática de certificado digital</td><td contenteditable></td></tr>
+    </tbody></table></div>
+    <div class="edit-hint">Clique em qualquer célula para editar</div>
+  </div>
+</div>
+</section>
+
+<!-- ══════════ JORNADA 2 DETALHADA ══════════ -->
+<section>
+<div class="full slide-light">
+  <div class="slide-header" style="background:var(--gelo);">
+    <div class="slide-header-left">
+      <div class="slide-badge badge-jorn">Jornada de Aprendizagem · 2</div>
+      <h2 class="slide-title">Motorista Profissional</h2>
+      <p class="slide-sub">Fluxo digital para condutores profissionais — validação de prontuário, curso especializado, registro no RENACH, taxa e prova.</p>
+    </div>
+  </div>
+  <div class="slide-body">
+    <div class="tbl-wrap">
+    <table class="ept"><thead><tr><th style="width:50px">#</th><th style="width:165px">Etapa</th><th>Descrição</th><th style="width:60px">Resp.</th><th style="width:130px">Risco</th><th style="width:130px">Mitigação</th><th style="width:150px">Solução</th><th style="width:60px">Prazo</th></tr></thead><tbody>
+    <tr><td class="etapa">2.1</td><td contenteditable>Portal do Cidadão Detran-SP</td><td contenteditable>Ponto inicial de acesso — inclui cursos especializados e validação dos requisitos para matrícula.</td><td contenteditable data-type="resp"><span class="tag">DAC</span></td><td contenteditable><span class="risk">Dificuldade de acesso ou localização</span></td><td contenteditable><span class="mit">Organização clara e orientações ao cidadão</span></td><td contenteditable>Integração do catálogo à Carta de Serviços; botões de acesso direto</td><td contenteditable>—</td></tr>
+    <tr><td class="etapa">2.2</td><td contenteditable>Validação de prontuário</td><td contenteditable>Verificação no sistema de habilitação para confirmar se o condutor atende aos requisitos para o curso especializado.</td><td contenteditable data-type="resp"><span class="tag">DTI</span></td><td contenteditable><span class="risk">Inconsistências nos dados do prontuário</span></td><td contenteditable><span class="mit">Integração e testes de validação</span></td><td contenteditable>API para consulta ao RENACH e Certidões</td><td contenteditable>—</td></tr>
+    <tr><td class="etapa">2.3</td><td contenteditable>Acesso à Plataforma de Ensino</td><td contenteditable>Autenticação do usuário e acesso à plataforma educacional para registro de participação no curso.</td><td contenteditable data-type="resp"><span class="tag">DTI</span></td><td contenteditable><span class="risk">Falhas de autenticação</span></td><td contenteditable><span class="mit">Testes de integração portal × plataforma</span></td><td contenteditable>Link de acesso para a Plataforma Moodle</td><td contenteditable>—</td></tr>
+    <tr><td class="etapa">2.4</td><td contenteditable>Realização do curso</td><td contenteditable>Curso especializado na plataforma com carga horária exigida. Conclusão registrada no RENACH via API.</td><td contenteditable data-type="resp"><span class="tag">DTI</span></td><td contenteditable><span class="risk">Baixa conclusão dos cursos</span></td><td contenteditable><span class="mit">Conteúdos estruturados; monitoramento UX</span></td><td contenteditable>API para envio imediato dos dados de conclusão para a CNH</td><td contenteditable>—</td></tr>
+    <tr><td class="etapa">2.5</td><td contenteditable>Certificação de saída</td><td contenteditable>Emissão do certificado após cumprimento dos requisitos pedagógicos e carga horária exigida.</td><td contenteditable data-type="resp"><span class="tag">DTI</span></td><td contenteditable><span class="risk">Erro na geração do certificado</span></td><td contenteditable><span class="mit">Testes e validação antes da liberação</span></td><td contenteditable>Registro automático no RENACH via API</td><td contenteditable>—</td></tr>
+    <tr><td class="etapa">2.6</td><td contenteditable>Evento curso no RENACH</td><td contenteditable>Registro da conclusão do curso no sistema de habilitação para atualização do prontuário do condutor.</td><td contenteditable data-type="resp"><span class="tag">DTI</span></td><td contenteditable><span class="risk">Falha na integração de sistemas</span></td><td contenteditable><span class="mit">Validação técnica e acompanhamento</span></td><td contenteditable>Serviço desenvolvido — incluir EPT</td><td contenteditable>18/03</td></tr>
+    <tr><td class="etapa">2.7</td><td contenteditable>Abertura de taxa para pagamento</td><td contenteditable>Geração da taxa correspondente à realização da prova ou etapa obrigatória vinculada ao curso.</td><td contenteditable data-type="resp"><span class="tag">DTI</span></td><td contenteditable><span class="risk">Erro na geração da taxa</span></td><td contenteditable><span class="mit">Testes do sistema; orientações ao cidadão</span></td><td contenteditable>Serviço desenvolvido — incluir EPT</td><td contenteditable>18/03</td></tr>
+    <tr><td class="etapa">2.8</td><td contenteditable>Agendamento de prova</td><td contenteditable>Agendamento da prova necessária para conclusão do processo de certificação do curso especializado.</td><td contenteditable data-type="resp"><span class="tag">DTI</span></td><td contenteditable><span class="risk">Indisponibilidade de datas</span></td><td contenteditable><span class="mit">Disponibilização adequada de vagas</span></td><td contenteditable>Serviço desenvolvido — incluir EPT</td><td contenteditable>18/03</td></tr>
+    <tr><td class="etapa">2.9</td><td contenteditable>Realização da prova</td><td contenteditable>Aplicação da prova para avaliação do conhecimento adquirido no curso especializado.</td><td contenteditable data-type="resp">—</td><td contenteditable><span class="risk">Problemas operacionais</span></td><td contenteditable><span class="mit">Planejamento e suporte operacional</span></td><td contenteditable>Serviço desenvolvido</td><td contenteditable>18/03</td></tr>
+    <tr><td class="etapa">2.10</td><td contenteditable>Evento exame</td><td contenteditable>Registro do resultado da prova no sistema de habilitação, finalizando o processo de certificação.</td><td contenteditable data-type="resp">—</td><td contenteditable><span class="risk">Erro no registro ou atraso na atualização</span></td><td contenteditable><span class="mit">Validação antes da finalização do processo</span></td><td contenteditable>Serviço desenvolvido</td><td contenteditable>18/03</td></tr>
+    </tbody></table></div>
+    <div class="edit-hint">Clique em qualquer célula para editar</div>
+  </div>
+</div>
+</section>
+
+<!-- ══════════ JORNADA 3 DETALHADA ══════════ -->
+<section>
+<div class="full slide-light">
+  <div class="slide-header" style="background:var(--gelo);">
+    <div class="slide-header-left">
+      <div class="slide-badge badge-jorn">Jornada de Aprendizagem · 3</div>
+      <h2 class="slide-title">Condutor Infrator — Curso de Reciclagem</h2>
+      <p class="slide-sub">Fluxo digital para condutores que necessitam cumprir o curso de reciclagem previsto na legislação — integrado aos sistemas de habilitação.</p>
+    </div>
+  </div>
+  <div class="slide-body">
+    <div class="tbl-wrap">
+    <table class="ept"><thead><tr><th style="width:50px">#</th><th style="width:165px">Etapa</th><th>Descrição</th><th style="width:70px">Resp.</th><th style="width:130px">Risco</th><th style="width:130px">Mitigação</th><th style="width:150px">Solução</th><th style="width:60px">Prazo</th></tr></thead><tbody>
+    <tr><td class="etapa">3.1</td><td contenteditable>Portal do Cidadão Detran-SP</td><td contenteditable>Ponto inicial de acesso onde o condutor inicia o processo de realização do curso de reciclagem.</td><td contenteditable data-type="resp"><span class="tag">DAC</span></td><td contenteditable><span class="risk">Dificuldade de navegação</span></td><td contenteditable><span class="mit">Organização clara das informações</span></td><td contenteditable>Carta de serviço com API</td><td contenteditable>31/03</td></tr>
+    <tr><td class="etapa">3.2</td><td contenteditable>Validação de prontuário</td><td contenteditable>Verificação das informações no portal para identificar obrigatoriedade e confirmar elegibilidade ao curso de reciclagem.</td><td contenteditable data-type="resp"><span class="tag">DTI</span></td><td contenteditable><span class="risk">Inconsistências nos dados</span></td><td contenteditable><span class="mit">Integração e testes antes da disponibilização</span></td><td contenteditable>RPA</td><td contenteditable>31/03</td></tr>
+    <tr><td class="etapa">3.3</td><td contenteditable>Acesso à Plataforma de Ensino</td><td contenteditable>Integração portal × plataforma com autenticação do usuário e registro de participação no curso.</td><td contenteditable data-type="resp"><span class="tag">DTI</span></td><td contenteditable><span class="risk">Falhas no processo de autenticação</span></td><td contenteditable><span class="mit">Testes de integração e suporte técnico</span></td><td contenteditable>Plugs - Moodle</td><td contenteditable>31/03</td></tr>
+    <tr><td class="etapa">3.4</td><td contenteditable>Realização do curso</td><td contenteditable>Realização do curso de reciclagem com acesso aos conteúdos obrigatórios e carga horária exigida.</td><td contenteditable data-type="resp"><span class="tag">DTI</span></td><td contenteditable><span class="risk">Baixa conclusão; dificuldade de navegação</span></td><td contenteditable><span class="mit">Estruturação pedagógica adequada</span></td><td contenteditable>Sustentação Moodle</td><td contenteditable>31/03</td></tr>
+    <tr><td class="etapa">3.5</td><td contenteditable>Certificação saída</td><td contenteditable>Emissão do certificado após cumprimento da carga horária e requisitos pedagógicos do curso.</td><td contenteditable data-type="resp"><span class="tag">DTI</span></td><td contenteditable><span class="risk">Erro na geração do certificado</span></td><td contenteditable><span class="mit">Testes prévios e validação do sistema</span></td><td contenteditable>Plugs - Moodle</td><td contenteditable>31/03</td></tr>
+    <tr><td class="etapa">3.6</td><td contenteditable>Evento curso no RENACH</td><td contenteditable>Registro da conclusão do curso de reciclagem no sistema de habilitação para atualização do prontuário.</td><td contenteditable data-type="resp"><span class="tag">DTI</span></td><td contenteditable><span class="risk">Falha no envio ou atraso no registro</span></td><td contenteditable><span class="mit">Validação técnica entre sistemas</span></td><td contenteditable>Plugs - Moodle</td><td contenteditable>31/03</td></tr>
+    <tr><td class="etapa">3.7</td><td contenteditable>Abertura de taxa para pagamento</td><td contenteditable>Geração da taxa necessária para realização da prova vinculada ao curso de reciclagem.</td><td contenteditable data-type="resp"><span class="tag">DHC</span></td><td contenteditable><span class="risk">Erro na geração da taxa</span></td><td contenteditable><span class="mit">Testes e orientações ao cidadão</span></td><td contenteditable>Serviço já disponível no Portal</td><td contenteditable>31/03</td></tr>
+    <tr><td class="etapa">3.8</td><td contenteditable>Agendamento de prova</td><td contenteditable>Agendamento da prova obrigatória para conclusão do processo de reciclagem pelo condutor.</td><td contenteditable data-type="resp"><span class="tag">DHC</span></td><td contenteditable><span class="risk">Indisponibilidade de vagas</span></td><td contenteditable><span class="mit">Gestão adequada da oferta de vagas</span></td><td contenteditable>Disponibilizar a prova no Poupa Tempo</td><td contenteditable>31/03</td></tr>
+    <tr><td class="etapa">3.9</td><td contenteditable>Realização da prova</td><td contenteditable>Aplicação da prova para avaliação do conhecimento adquirido durante o curso de reciclagem.</td><td contenteditable data-type="resp"><span class="tag">DHC</span></td><td contenteditable><span class="risk">Problemas operacionais</span></td><td contenteditable><span class="mit">Planejamento e suporte operacional</span></td><td contenteditable>Disponibilizar a prova no Poupa Tempo</td><td contenteditable>31/03</td></tr>
+    <tr><td class="etapa">3.10</td><td contenteditable>Evento exame</td><td contenteditable>Registro do resultado da prova no sistema de habilitação, finalizando o processo de reciclagem.</td><td contenteditable data-type="resp"><span class="tag">PRODESP</span></td><td contenteditable><span class="risk">Erro no registro ou atraso</span></td><td contenteditable><span class="mit">Validação e conferência das informações</span></td><td contenteditable>Ativar o serviço (já existe)</td><td contenteditable>31/03</td></tr>
+    </tbody></table></div>
+    <div class="edit-hint">Clique em qualquer célula para editar</div>
+  </div>
+</div>
+</section>
+
+<!-- ══════════ JORNADA 4 DETALHADA ══════════ -->
+<section>
+<div class="full slide-light">
+  <div class="slide-header" style="background:var(--gelo);">
+    <div class="slide-header-left">
+      <div class="slide-badge badge-jorn">Jornada de Aprendizagem · 4</div>
+      <h2 class="slide-title">Servidor DETRAN-SP</h2>
+      <p class="slide-sub">Capacitação contínua dos servidores com rastreabilidade das atividades, integração com gestão de pessoas e metas da BR 2026.</p>
+    </div>
+  </div>
+  <div class="slide-body">
+    <div class="tbl-wrap">
+    <table class="ept"><thead><tr><th style="width:50px">#</th><th style="width:205px">Etapa</th><th>Descrição</th><th style="width:115px">Responsável</th><th style="width:170px">Risco</th><th style="width:170px">Mitigação</th><th style="width:140px">Solução</th><th style="width:80px">Prazo</th></tr></thead><tbody>
+    <tr><td class="etapa">4.1</td><td contenteditable>Acesso à Plataforma de Ensino</td><td contenteditable>Ambiente educacional digital com acesso a cursos, trilhas de aprendizagem, materiais didáticos e atividades de capacitação.</td><td contenteditable data-type="resp"><span class="tag">EPT</span></td><td contenteditable><span class="risk">Falhas na infraestrutura tecnológica</span></td><td contenteditable><span class="mit">Monitoramento e suporte técnico contínuo</span></td><td contenteditable></td><td contenteditable></td></tr>
+    <tr><td class="etapa">4.2</td><td contenteditable>Login na plataforma de ensino</td><td contenteditable>Autenticação do servidor — verificar possibilidade de login Gov.br pelo Portal e/ou Plataforma de ensino.</td><td contenteditable data-type="resp"><span class="tag">DTI</span></td><td contenteditable><span class="risk">Falhas no processo de autenticação</span></td><td contenteditable><span class="mit">Testes de integração e suporte técnico</span></td><td contenteditable></td><td contenteditable></td></tr>
+    <tr><td class="etapa">4.3a</td><td contenteditable>Definição de cursos obrigatórios</td><td contenteditable>Definição das capacitações obrigatórias considerando necessidades institucionais, políticas públicas e estratégia do DETRAN-SP.</td><td contenteditable data-type="resp"><span class="tag">EPT</span><span class="tag">Gestão</span></td><td contenteditable><span class="risk">Conteúdos desalinhados às necessidades</span></td><td contenteditable><span class="mit">Alinhamento com áreas estratégicas</span></td><td contenteditable></td><td contenteditable></td></tr>
+    <tr><td class="etapa">4.3b</td><td contenteditable>Visualização de trilhas obrigatórias</td><td contenteditable>Acesso do servidor às trilhas de capacitação definidas pela gestão institucional na plataforma.</td><td contenteditable data-type="resp"><span class="tag">EPT</span></td><td contenteditable><span class="risk">Falta de visibilidade das trilhas disponíveis</span></td><td contenteditable><span class="mit">Interface clara e comunicação institucional</span></td><td contenteditable></td><td contenteditable></td></tr>
+    <tr><td class="etapa">4.4</td><td contenteditable>Realização dos cursos</td><td contenteditable>Participação do servidor nos cursos obrigatórios e eletivos disponibilizados na plataforma educacional.</td><td contenteditable data-type="resp"><span class="tag">EPT</span></td><td contenteditable><span class="risk">Baixa adesão dos servidores</span></td><td contenteditable><span class="mit">Trilhas obrigatórias; comunicação institucional</span></td><td contenteditable></td><td contenteditable></td></tr>
+    <tr><td class="etapa">4.5</td><td contenteditable>Avaliação</td><td contenteditable>Realização das avaliações de aprendizagem ao final das formações para verificação do conhecimento adquirido.</td><td contenteditable data-type="resp"><span class="tag">EPT</span></td><td contenteditable><span class="risk">Avaliações não refletem o aprendizado real</span></td><td contenteditable><span class="mit">Revisão pedagógica das avaliações</span></td><td contenteditable></td><td contenteditable></td></tr>
+    <tr><td class="etapa">4.6</td><td contenteditable>Certificação saída</td><td contenteditable>Emissão do certificado de conclusão após cumprimento dos requisitos de participação e aprendizagem.</td><td contenteditable data-type="resp"><span class="tag">EPT</span></td><td contenteditable><span class="risk">Erro na geração do certificado</span></td><td contenteditable><span class="mit">Validação do sistema antes da liberação oficial</span></td><td contenteditable></td><td contenteditable></td></tr>
+    <tr><td class="etapa">4.7</td><td contenteditable>Envio da informação para CGGP</td><td contenteditable>Automação para validação do certificado e envio para o RH — registro das capacitações realizadas pelos servidores.</td><td contenteditable data-type="resp"><span class="tag">EPT</span><span class="tag">CGGP</span></td><td contenteditable><span class="risk">Falha na transmissão ou atraso no registro</span></td><td contenteditable><span class="mit">Integração entre sistemas e conferência periódica</span></td><td contenteditable></td><td contenteditable></td></tr>
+    <tr><td class="etapa">4.8</td><td contenteditable>Alimentação da BR 2026 (EPT)</td><td contenteditable>Registro das ações de capacitação para atendimento às metas e indicadores da BR 2026. Automação do envio das informações.</td><td contenteditable data-type="resp"><span class="tag">EPT</span></td><td contenteditable><span class="risk">Inconsistência ou atraso nas informações</span></td><td contenteditable><span class="mit">Padronização do fluxo; acompanhamento periódico</span></td><td contenteditable></td><td contenteditable></td></tr>
+    </tbody></table></div>
+    <div class="edit-hint">Clique em qualquer célula para editar</div>
+  </div>
+</div>
+</section>
+
+<!-- ══════════ CURSOS PRIORIZADOS ══════════ -->
+<section>
+<div class="full fim">
+  <div style="width:40px;height:2px;background:var(--az-cl);border-radius:1px;margin:0 auto 32px;"></div>
+  <h2>EPT<br><em>Digital</em></h2>
+  <p>Escola Pública de Trânsito · DETRAN-SP<br>Diretoria de Segurança Viária · 2026</p>
+</div>
+</section>
+
+</div><!-- /slides -->
+</div><!-- /reveal -->
+
+<!-- Firebase SDK (compat — funciona direto no HTML sem bundler) -->
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-database-compat.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/5.1.0/reveal.min.js"></script>
+
+<script>
+// ── Firebase config ─────────────────────────────────────────────────────────
+const firebaseConfig = {
+  apiKey:            "AIzaSyAm0eqi1cyavnAmudHkIIiLzOWPCVMpj0w",
+  authDomain:        "ept-digital.firebaseapp.com",
+  databaseURL:       "https://ept-digital-default-rtdb.firebaseio.com",
+  projectId:         "ept-digital",
+  storageBucket:     "ept-digital.firebasestorage.app",
+  messagingSenderId: "365580237517",
+  appId:             "1:365580237517:web:06c6dbd4644e22babbc784",
+};
+firebase.initializeApp(firebaseConfig);
+const db   = firebase.database();
+const ROOT = 'eptdigital/ppt/cells'; // coleção dedicada no banco
+
+// ── Reveal ───────────────────────────────────────────────────────────────────
+const isTablet = window.innerWidth <= 1024;
+Reveal.initialize({
+  hash: true, history: true, controls: true, progress: true,
+  slideNumber: 'c/t', center: false,
+  transition: 'slide', transitionSpeed: 'fast',
+  backgroundTransition: 'fade',
+  width:    isTablet ? window.innerWidth  : 1280,
+  height:   isTablet ? window.innerHeight : 700,
+  margin:   isTablet ? 0.02 : 0,
+  minScale: 0.2,
+  maxScale: isTablet ? 1.0 : 2.0,
+  // Em tablet deixa o conteúdo fluir naturalmente sem escala forçada
+  disableLayout: false,
+});
+
+// ── Impede setas mudarem de slide ao editar célula ───────────────────────────
+document.addEventListener('keydown', e => {
+  const el = document.activeElement;
+  if (el && el.contentEditable === 'true') {
+    if (['ArrowLeft','ArrowRight','ArrowUp','ArrowDown'].includes(e.key)) e.stopPropagation();
+    if (e.key === 'Escape') el.blur();
+  }
+}, true);
+
+// ── Células de Responsável: Enter cria nova tag ──────────────────────────────
+// Quando o foco está numa célula [data-type="resp"] ou dentro de um span.tag
+// dentro dela, Enter insere um novo span.tag editável.
+// Backspace em span.tag vazio remove a tag.
+
+function getParentRespCell(node) {
+  let el = node;
+  while (el) {
+    if (el.dataset && el.dataset.type === 'resp') return el;
+    el = el.parentElement;
+  }
+  return null;
+}
+
+function createTag(text) {
+  const span = document.createElement('span');
+  span.className = 'tag';
+  span.contentEditable = 'true';
+  span.textContent = text || '';
+  return span;
+}
+
+function placeCaretInside(el) {
+  el.focus();
+  const range = document.createRange();
+  range.selectNodeContents(el);
+  range.collapse(false);
+  const sel = window.getSelection();
+  sel.removeAllRanges();
+  sel.addRange(range);
+}
+
+// Ao focar uma célula resp, garante que o conteúdo seja só spans.tag ─────────
+document.addEventListener('focusin', e => {
+  const cell = e.target.closest('[data-type="resp"]');
+  if (!cell) return;
+
+  // Se a célula está sendo focada diretamente (não um span.tag interno)
+  // e há spans.tag, coloca cursor no último span
+  if (e.target === cell) {
+    const tags = cell.querySelectorAll('span.tag');
+    if (tags.length) {
+      placeCaretInside(tags[tags.length - 1]);
+    } else {
+      // Célula vazia: cria a primeira tag
+      const tag = createTag('');
+      cell.innerHTML = '';
+      cell.appendChild(tag);
+      placeCaretInside(tag);
+    }
+  }
+});
+
+document.addEventListener('keydown', e => {
+  const el = document.activeElement;
+  const cell = getParentRespCell(el);
+  if (!cell) return;
+
+  if (e.key === 'Enter') {
+    e.preventDefault();
+    e.stopPropagation();
+
+    // Cria nova tag após o span atual (ou ao final da célula)
+    const newTag = createTag('');
+    const currentSpan = el.closest('span.tag');
+    if (currentSpan && currentSpan.parentElement === cell) {
+      currentSpan.after(newTag);
+    } else {
+      cell.appendChild(newTag);
+    }
+    placeCaretInside(newTag);
+    return;
+  }
+
+  if (e.key === 'Backspace') {
+    const span = el.closest('span.tag');
+    if (!span) return;
+    if (span.textContent === '') {
+      e.preventDefault();
+      e.stopPropagation();
+      const prev = span.previousElementSibling;
+      span.remove();
+      if (prev && prev.classList.contains('tag')) {
+        placeCaretInside(prev);
+      } else {
+        cell.focus();
+      }
+    }
+  }
+}, true);
+
+// Remove tags vazias ao sair da célula ────────────────────────────────────────
+document.addEventListener('focusout', e => {
+  const cell = getParentRespCell(e.target);
+  if (!cell) return;
+  // Pequeno delay para não interferir com focusin da nova tag
+  setTimeout(() => {
+    if (!cell.contains(document.activeElement)) {
+      cell.querySelectorAll('span.tag').forEach(s => {
+        if (s.textContent.trim() === '') s.remove();
+      });
+      // Se ficou texto solto, envolve em tag
+      cell.childNodes.forEach(node => {
+        if (node.nodeType === Node.TEXT_NODE && node.textContent.trim()) {
+          const tag = createTag(node.textContent.trim());
+          cell.replaceChild(tag, node);
+        }
+      });
+    }
+  }, 120);
+});
+
+// ── Navegação pelos cards do mapa ────────────────────────────────────────────
+document.querySelectorAll('.mapa-card[data-slide]').forEach(card => {
+  card.addEventListener('click', () => {
+    const target = document.getElementById(card.dataset.slide);
+    if (target) {
+      const idx = Array.from(document.querySelectorAll('.reveal .slides section')).indexOf(target);
+      if (idx !== -1) Reveal.slide(idx);
+    }
+  });
+});
+
+// ── Identifica células com chaves estáveis baseadas em posição no DOM ────────
+// Cada célula recebe um ID único derivado do slide + índice dentro do slide,
+// garantindo que a chave não mude mesmo que outras células sejam adicionadas.
+function getCellKey(cell) {
+  return cell.dataset.fbkey || null;
+}
+
+function assignCellKeys() {
+  document.querySelectorAll('.reveal .slides section').forEach((section, si) => {
+    section.querySelectorAll('[contenteditable]').forEach((cell, ci) => {
+      cell.dataset.fbkey = `s${si}_c${ci}`;
+    });
+  });
+}
+
+// ── Salva uma única célula no Firebase (debounced) ───────────────────────────
+const saveTimers = {};
+function saveCell(cell) {
+  const key = getCellKey(cell);
+  if (!key) return;
+  clearTimeout(saveTimers[key]);
+  saveTimers[key] = setTimeout(() => {
+    db.ref(`${ROOT}/${key}`).set(cell.innerHTML)
+      .catch(err => console.warn('Firebase save error:', err));
+    // Mantém localStorage como fallback offline
+    try {
+      const local = JSON.parse(localStorage.getItem('eptd_fb') || '{}');
+      local[key] = cell.innerHTML;
+      localStorage.setItem('eptd_fb', JSON.stringify(local));
+    } catch(_) {}
+  }, 600); // 600ms debounce — não dispara a cada tecla
+}
+
+// ── Indicador de status de conexão ──────────────────────────────────────────
+const statusEl = document.createElement('div');
+statusEl.id = 'fb-status';
+statusEl.style.cssText = `
+  position:fixed; bottom:14px; right:60px; z-index:9999;
+  font-family:'Open Sans',sans-serif; font-size:11px; font-weight:600;
+  padding:4px 12px; border-radius:12px; letter-spacing:.5px;
+  transition: opacity .4s;
+`;
+document.body.appendChild(statusEl);
+
+function setStatus(state) {
+  const map = {
+    connecting: { text:'⟳ Conectando…',  bg:'#e8f0fe', color:'#1a4dad' },
+    online:     { text:'✓ Salvo',          bg:'#e6f9ee', color:'#1a7a45' },
+    saving:     { text:'↑ Salvando…',      bg:'#fff8e1', color:'#b06b00' },
+    offline:    { text:'⚠ Offline',        bg:'#fff0f0', color:'#b03020' },
+  };
+  const s = map[state] || map.online;
+  statusEl.textContent = s.text;
+  statusEl.style.background = s.bg;
+  statusEl.style.color = s.color;
+  statusEl.style.opacity = '1';
+  if (state === 'online') {
+    setTimeout(() => { statusEl.style.opacity = '0'; }, 2500);
+  }
+}
+
+// Monitora conexão com o Firebase
+db.ref('.info/connected').on('value', snap => {
+  setStatus(snap.val() ? 'online' : 'offline');
+});
+
+// ── Escuta mudanças em tempo real → atualiza células para todos os usuários ──
+function listenForChanges() {
+  db.ref(ROOT).on('value', snap => {
+    const data = snap.val() || {};
+    document.querySelectorAll('[contenteditable][data-fbkey]').forEach(cell => {
+      const key = cell.dataset.fbkey;
+      if (key && data[key] !== undefined && document.activeElement !== cell) {
+        cell.innerHTML = data[key];
+        // Restaura contentEditable nas tags de resp após sync
+        if (cell.dataset.type === 'resp') {
+          cell.querySelectorAll('span.tag').forEach(s => { s.contentEditable = 'true'; });
+        }
+      }
+    });
+  });
+}
+
+// ── Carrega dados ao iniciar ─────────────────────────────────────────────────
+async function loadData() {
+  setStatus('connecting');
+  assignCellKeys();
+
+  try {
+    const snap = await db.ref(ROOT).get();
+    const data = snap.val() || {};
+
+    if (Object.keys(data).length === 0) {
+      // Firebase vazio — tenta migrar localStorage existente
+      const local = JSON.parse(localStorage.getItem('eptd_v2') || localStorage.getItem('eptd_fb') || '{}');
+      const cells = document.querySelectorAll('[contenteditable][data-fbkey]');
+
+      if (Object.keys(local).length > 0) {
+        // Dados antigos usavam índice numérico — migra para chaves novas
+        const updates = {};
+        cells.forEach((cell, i) => {
+          const oldVal = local[i] || local[cell.dataset.fbkey];
+          if (oldVal) {
+            cell.innerHTML = oldVal;
+            updates[cell.dataset.fbkey] = oldVal;
+          }
+        });
+        if (Object.keys(updates).length > 0) {
+          await db.ref(ROOT).update(updates);
+        }
+      }
+    } else {
+      // Aplica dados do Firebase
+      document.querySelectorAll('[contenteditable][data-fbkey]').forEach(cell => {
+        const val = data[cell.dataset.fbkey];
+        if (val !== undefined) {
+          cell.innerHTML = val;
+          if (cell.dataset.type === 'resp') {
+            cell.querySelectorAll('span.tag').forEach(s => { s.contentEditable = 'true'; });
+          }
+        }
+      });
+    }
+
+    setStatus('online');
+    listenForChanges();
+
+  } catch(err) {
+    console.warn('Firebase load error, usando localStorage:', err);
+    setStatus('offline');
+    // Fallback: carrega do localStorage
+    try {
+      const local = JSON.parse(localStorage.getItem('eptd_fb') || localStorage.getItem('eptd_v2') || '{}');
+      const cells = document.querySelectorAll('[contenteditable][data-fbkey]');
+      cells.forEach((cell, i) => {
+        const val = local[cell.dataset.fbkey] || local[i];
+        if (val !== undefined) cell.innerHTML = val;
+      });
+    } catch(_) {}
+  }
+}
+
+// ── Listener de edição ───────────────────────────────────────────────────────
+document.addEventListener('input', e => {
+  if (e.target.contentEditable === 'true') {
+    setStatus('saving');
+    saveCell(e.target);
+  }
+});
+
+// ── Torna spans.tag dentro de células resp editáveis ────────────────────────
+function makeRespTagsEditable() {
+  document.querySelectorAll('[data-type="resp"] span.tag').forEach(span => {
+    span.contentEditable = 'true';
+  });
+}
+
+// ── Inicia após Reveal estar pronto ─────────────────────────────────
+Reveal.on('ready', () => {
+  loadData();
+  setTimeout(makeRespTagsEditable, 1200);
+});
+</script>
+</body>
+</html>
